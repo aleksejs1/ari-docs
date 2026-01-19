@@ -1,0 +1,72 @@
+---
+id: api-users-post
+title: "Creates a User resource."
+description: "Creates a User resource."
+sidebar_label: "Creates a User resource."
+hide_title: true
+hide_table_of_contents: true
+api: eJztWd9v2zYQ/leI2+MU28vy5KekQYdlwJAgTdYHwyho6WyxpUj1SNkRDP3vw1HyL8l2m6TFhsB5iGTp7vjx7rvjkVqCzZGkV9bcJDAEmatPhUNyn3LrPETg5czBcASPDgnGERC63BqHDoZLOB/8xpcEXUwqZyMwDJKC0NmCYhQxofSYQASxNR6NZwWZ51rFYdS+Tn797FhxCS5OMZNBQOvbKQxHS/BljjAEO/mMMePJiQF7VQO4DEafglFrcFfHeVJmBlX0TStzG8sJ37U1IS0Tkt03EaApMvZL6n0+7PcXi0Vv8XvP0qxvXD9o9WNL+AuMq4q99rVQhAlrNKOtbI8jkEmi2BdS323h8lRgNa4iuFTJXmyX9ZPOm/Z4ir1fC48j8Mprlv6TR7/xmL2TDj/Unv+2q2oohDK5NbqsQUYrHWU8zpAYW1HsBV1VWwiYKD2OvU7OmHM9Nhvgb/OjS46fi3AX3w6wKgKtzBcehu8vBoMu+2/MXGqVCGXywp9Y/zZY32h3abUb+yvhUks+EmmRSXPGwnKiUbgiyySVwk6FT1HkZCcasx6saDnaONgUWgNPP0Evlf6eMVuD4VOupQksEy7HWE1VLLwVPlVO2DguiNDE+CwwzktfuI3TR2CKbIK0lokAn2SWa3bX6GJwMWaYU1loD8OLwaCKQBnnpYm/y4uP9zeCcIo1UJ9KL1SCxqupQhdQryd2eELixotMlsJSuBjrRalQJ2JakE+RhDJTS1ntKDUVCa6HTI57Y0XA10+jwSqCxajL9R2Lh4paF2Kosm00hDmhQ+PrGdupiG2WWSOQyJILU26S5D0/aSpzpx43mPeUr3YOvQDBKe1Oafdfp13VSoQXdCQn5p+Y/zaY3255z8+7Le9Vw+OVb06bvTfS9m6ycJNb5+f7NlNzZXWI8FbOgiSSJUSgPGZuX5ncHa35Vd5Jn+4Lwi7pHmo2Bw2RS5+u0nENhXFl6Jyc7fHbPnONsJDO2VjxqYVYKJ+2rYakOFwtX9bEbckfyvau4KFF4nAlOVYUn9FNPpqcbMzuCguA8cqXW/3jtTXOk1TG/7Ny24/uJg8gOPH3x/P3f8fHo0R7dbd2YtaJWYeYtdMNtUs7XIejbiek2DkCD929JJmhR+J2dVwv2ej8O5uU3X6KPW5wsWvlmT3VcUIdOPuMINdSmTvp3MLSlsRRV22OSeuz/lef4P5sdDstU2i8OB18avkDSPPZIw+pBn2Zq374HgIROKR5HcElFKT5dSdbgBdLh3FBXDZYcoKSkK4Ktjcab78OfVg95W2h9cS52+RhgxgMGyGImps/wmYChvDXxwf2Dl9eqFxFwEG637Dyfb272oRj4+NWFLbiwxucrd0rXJES1/d/d50UATuy/jHoDXqDEF3rfCYDU4wMmI8kVKupWqfGMZ3GM7yF6IdJhM8AFGpVHe8Rf/+CCOqIjyNImQ3DESyXE+nwkXRV8eOvBVJZZ/JckuKVIgQ3ghRlghQC/wXLupAwsrOHesc1l7oIK0A7P7gbrzWu4hhzf0B2lezMozVn724/PHBkm2qS2YTVSC4gCv+Dx22+XoXCsyVoaWZFWAOgtsl//wIhGciV
+sidebar_class_name: "post api-method"
+info_path: docs/api/ari-crm
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Creates a User resource."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/api/users"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Creates a User resource.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={[]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"description":"The new User resource","content":{"application/ld+json":{"schema":{"type":"object","properties":{"uuid":{"type":"string"},"plainPassword":{"type":["string","null"]}},"title":"User-user.create"}},"application/json":{"schema":{"type":"object","properties":{"uuid":{"type":"string"},"plainPassword":{"type":["string","null"]}},"title":"User-user.create"}}},"required":true}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"201":{"description":"User resource created","content":{"application/ld+json":{"schema":{"allOf":[{"type":"object","properties":{"@context":{"oneOf":[{"type":"string"},{"type":"object","properties":{"@vocab":{"type":"string"},"hydra":{"type":"string","enum":["http://www.w3.org/ns/hydra/core#"]}},"required":["@vocab","hydra"],"additionalProperties":true}]},"@id":{"type":"string"},"@type":{"type":"string"}},"required":["@id","@type"],"title":"HydraItemBaseSchema"},{"type":"object","properties":{"id":{"readOnly":true,"type":"integer"},"uuid":{"type":"string"}}}],"title":"User.jsonld-user.read"}},"application/json":{"schema":{"type":"object","properties":{"id":{"readOnly":true,"type":"integer"},"uuid":{"type":"string"}},"title":"User-user.read"}}},"links":{}},"400":{"description":"Invalid input","content":{"application/ld+json":{"schema":{"allOf":[{"type":"object","properties":{"@context":{"oneOf":[{"type":"string"},{"type":"object","properties":{"@vocab":{"type":"string"},"hydra":{"type":"string","enum":["http://www.w3.org/ns/hydra/core#"]}},"required":["@vocab","hydra"],"additionalProperties":true}]},"@id":{"type":"string"},"@type":{"type":"string"}},"required":["@id","@type"],"title":"HydraItemBaseSchema"},{"type":"object","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"},"description":{"readOnly":true,"type":["string","null"]}}}],"description":"A representation of common errors.","title":"Error.jsonld"}},"application/problem+json":{"schema":{"type":"object","description":"A representation of common errors.","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"}},"title":"Error"}},"application/json":{"schema":{"type":"object","description":"A representation of common errors.","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"}},"title":"Error"}}},"links":{}},"422":{"description":"An error occurred","content":{"application/ld+json":{"schema":{"allOf":[{"type":"object","properties":{"@context":{"oneOf":[{"type":"string"},{"type":"object","properties":{"@vocab":{"type":"string"},"hydra":{"type":"string","enum":["http://www.w3.org/ns/hydra/core#"]}},"required":["@vocab","hydra"],"additionalProperties":true}]},"@id":{"type":"string"},"@type":{"type":"string"}},"required":["@id","@type"],"title":"HydraItemBaseSchema"},{"type":"object","properties":{"status":{"default":422,"type":"integer"},"violations":{"type":"array","items":{"type":"object","properties":{"propertyPath":{"type":"string","description":"The property path of the violation"},"message":{"type":"string","description":"The message associated with the violation"}}}},"detail":{"readOnly":true,"type":"string"},"description":{"readOnly":true,"type":"string"},"type":{"readOnly":true,"type":"string"},"title":{"readOnly":true,"type":["string","null"]},"instance":{"readOnly":true,"type":["string","null"]}}}],"description":"Unprocessable entity","title":"ConstraintViolation.jsonld"}},"application/problem+json":{"schema":{"type":"object","description":"Unprocessable entity","properties":{"status":{"default":422,"type":"integer"},"violations":{"type":"array","items":{"type":"object","properties":{"propertyPath":{"type":"string","description":"The property path of the violation"},"message":{"type":"string","description":"The message associated with the violation"}}}},"detail":{"readOnly":true,"type":"string"},"type":{"readOnly":true,"type":"string"},"title":{"readOnly":true,"type":["string","null"]},"instance":{"readOnly":true,"type":["string","null"]}},"title":"ConstraintViolation"}},"application/json":{"schema":{"type":"object","description":"Unprocessable entity","properties":{"status":{"default":422,"type":"integer"},"violations":{"type":"array","items":{"type":"object","properties":{"propertyPath":{"type":"string","description":"The property path of the violation"},"message":{"type":"string","description":"The message associated with the violation"}}}},"detail":{"readOnly":true,"type":"string"},"type":{"readOnly":true,"type":"string"},"title":{"readOnly":true,"type":["string","null"]},"instance":{"readOnly":true,"type":["string","null"]}},"title":"ConstraintViolation"}}},"links":{}}}}
+>
+  
+</StatusCodes>
+
+
+      

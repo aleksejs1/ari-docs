@@ -1,0 +1,72 @@
+---
+id: api-notification-subscriptions-post
+title: "Creates a NotificationSubscription resource."
+description: "Creates a NotificationSubscription resource."
+sidebar_label: "Creates a NotificationSubscription resource."
+hide_title: true
+hide_table_of_contents: true
+api: eJztWU1v4zYQ/SvE9FjFdtKcfEo22KIu0CbIR3sIjICWxhF3KVI7pOIYhv57MZRsy5YVb5IFWqTOIbalmeHw8c3jUFqAzZGkV9aMEhiCzNWDsV5NVRwuPrhi4mJSOf9wD7l1HiLw8tHB8B7+bFjeNAxhHAGhy61x6GC4gJPBMX8kuDYZdnoLQmcLilHEhNJjAhHE1ng0noPIPNe1V18nP39xHGwBLk4xk8FA68spDO8X4Oc5whDs5AvGnHdOPFuvqqTOQtDnENQa3PRxnpR5hDLaG+XJxnLC37Y9IZ0nJNt3IkBTZIxf6n0+7Pdns1lv9kvP0mPfuH7w6seW8CcYlyUj+a1QhAl71KMtY48jkEmiGAuprxp5eSqwHJcRnKlkZ25n1ZXWne3xFKNfGY8j8Mprtv6NRx95zD5JhzcV8vuhqlIhlMml0fMqyWjpo4zHRyTOLU6lMajX2d2voTOF1pzJ1FImPfuROiKcIqGJkbF9llkekmR03bDfr6/0Ypv1OTwar/z8dvf8l7dHTdgauaGRE41JxeapLLSH4XF7EmXZQKuL6D3mrk6OOguux1iFNWmSvs34A+xL2PeDvh/tMgKtzFfGjr+fDgZt7RqZJ6lVIpTJC3/Qp4+hT7V3u1Y21/5cuNSSj0RaZNIcsTGTU7giyyTNhZ0Kn6LIyU40Zj2Iusqp5MheKv09Y24Nhs+5liawTLgcY6a08Fb4VDlh47igUJmvSsZ56QvXrH9TZBOkRv3XRc27/+ngdBytq/F0MCgjUMZ5yYrwHTO6ux6JlYQIn0ovVMIyMFXoQtariXVPSIy8yORcWAofxnoxV6gTMS3Ip0hCmUqzGCg1FQmuhkxeRmNJwPdPo85VhIhRm+sbEbuUup1i2GO2syHMCR0aX83YTkVss8wagUSWXJhyXSSf+Uq9B7U2mTrnHfK1XUNvyOBQdoey+7fLrtwqhDe0WQfmH5j/MZi/3fKenLRb3vOax0tsDsfyD9L2rqtwXVsnJ7tOiE/K6rDCjZoFSSTnEIHymLldMrk5Wv1rfiV9umsRNkl3W7E5eIhc+nRZjqtUOK8MnZOPO3DbFa42FtI5Gyt+viRmyqfbUUNRdKvl25q4hn1XtbcNuzaJbiV5SRRf0U3emZxszHCFDSAc0Bv944U1zpNUxv+1hO1Hd5MdGRz4++P5+5/j44tEe3e3dmDWgVldzNrohralHS7CSwknpNj7AiN0/JJkhh6JW9hxtY2j859sMm/3WLwKBmf7I7+y93qZeP/7B78zUh7f/Zz9AGMN40azGlpeFiKfWn7DWL9CzIPIQV/mqt/9whEicEhPVfEsoCDNPi3xAu5dHMYFsYqz5QQlIZ0XPMj9uHk7tMXVgjWNVqAx/DxsMINhbQRR/eXX5QL+/vctA8sfb3QuI2CKXa8F4fOSBA0y7ebDJh2aR5glCwaNRT8OSjm1jWcOcE5KXFz/0cYyAsa7+jHoDXoDniavWiZDORgZpvZKGdxqj1fi9do4NdB8QOznWqqwywVeLGpO3fNLbC65blaNI0iZhsN7WCwm0uEd6bLky98KpHkl1E+SFOMXCBRBijJBCuT6ivNq7+ApHN1Wh+wnqYuw6W8rCB/AKo/zOMbcd9gudZu5uiqWq8ubW2ZPvVlkNmE3kjOIwv+wXDZfNR7h2gK0NI9F2Pahisl//wDsYjIx
+sidebar_class_name: "post api-method"
+info_path: docs/api/ari-crm
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Creates a NotificationSubscription resource."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/api/notification_subscriptions"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Creates a NotificationSubscription resource.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={[]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"description":"The new NotificationSubscription resource","content":{"application/ld+json":{"schema":{"type":"object","properties":{"channel":{"type":["string","null"],"format":"iri-reference","example":"https://example.com/"},"entityType":{"type":"string"},"entityId":{"type":"integer"},"enabled":{"default":1,"type":"integer"}},"title":"NotificationSubscription-notification_subscription.write"}},"application/json":{"schema":{"type":"object","properties":{"channel":{"type":["string","null"],"format":"iri-reference","example":"https://example.com/"},"entityType":{"type":"string"},"entityId":{"type":"integer"},"enabled":{"default":1,"type":"integer"}},"title":"NotificationSubscription-notification_subscription.write"}}},"required":true}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"201":{"description":"NotificationSubscription resource created","content":{"application/ld+json":{"schema":{"allOf":[{"type":"object","properties":{"@context":{"oneOf":[{"type":"string"},{"type":"object","properties":{"@vocab":{"type":"string"},"hydra":{"type":"string","enum":["http://www.w3.org/ns/hydra/core#"]}},"required":["@vocab","hydra"],"additionalProperties":true}]},"@id":{"type":"string"},"@type":{"type":"string"}},"required":["@id","@type"],"title":"HydraItemBaseSchema"},{"type":"object","properties":{"id":{"readOnly":true,"type":"integer"},"channel":{"type":["string","null"],"format":"iri-reference","example":"https://example.com/"},"entityType":{"type":"string"},"entityId":{"type":"integer"},"enabled":{"default":1,"type":"integer"}}}],"title":"NotificationSubscription.jsonld-notification_subscription.read"}},"application/json":{"schema":{"type":"object","properties":{"id":{"readOnly":true,"type":"integer"},"channel":{"type":["string","null"],"format":"iri-reference","example":"https://example.com/"},"entityType":{"type":"string"},"entityId":{"type":"integer"},"enabled":{"default":1,"type":"integer"}},"title":"NotificationSubscription-notification_subscription.read"}}},"links":{}},"400":{"description":"Invalid input","content":{"application/ld+json":{"schema":{"allOf":[{"type":"object","properties":{"@context":{"oneOf":[{"type":"string"},{"type":"object","properties":{"@vocab":{"type":"string"},"hydra":{"type":"string","enum":["http://www.w3.org/ns/hydra/core#"]}},"required":["@vocab","hydra"],"additionalProperties":true}]},"@id":{"type":"string"},"@type":{"type":"string"}},"required":["@id","@type"],"title":"HydraItemBaseSchema"},{"type":"object","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"},"description":{"readOnly":true,"type":["string","null"]}}}],"description":"A representation of common errors.","title":"Error.jsonld"}},"application/problem+json":{"schema":{"type":"object","description":"A representation of common errors.","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"}},"title":"Error"}},"application/json":{"schema":{"type":"object","description":"A representation of common errors.","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"}},"title":"Error"}}},"links":{}},"422":{"description":"An error occurred","content":{"application/ld+json":{"schema":{"allOf":[{"type":"object","properties":{"@context":{"oneOf":[{"type":"string"},{"type":"object","properties":{"@vocab":{"type":"string"},"hydra":{"type":"string","enum":["http://www.w3.org/ns/hydra/core#"]}},"required":["@vocab","hydra"],"additionalProperties":true}]},"@id":{"type":"string"},"@type":{"type":"string"}},"required":["@id","@type"],"title":"HydraItemBaseSchema"},{"type":"object","properties":{"status":{"default":422,"type":"integer"},"violations":{"type":"array","items":{"type":"object","properties":{"propertyPath":{"type":"string","description":"The property path of the violation"},"message":{"type":"string","description":"The message associated with the violation"}}}},"detail":{"readOnly":true,"type":"string"},"description":{"readOnly":true,"type":"string"},"type":{"readOnly":true,"type":"string"},"title":{"readOnly":true,"type":["string","null"]},"instance":{"readOnly":true,"type":["string","null"]}}}],"description":"Unprocessable entity","title":"ConstraintViolation.jsonld"}},"application/problem+json":{"schema":{"type":"object","description":"Unprocessable entity","properties":{"status":{"default":422,"type":"integer"},"violations":{"type":"array","items":{"type":"object","properties":{"propertyPath":{"type":"string","description":"The property path of the violation"},"message":{"type":"string","description":"The message associated with the violation"}}}},"detail":{"readOnly":true,"type":"string"},"type":{"readOnly":true,"type":"string"},"title":{"readOnly":true,"type":["string","null"]},"instance":{"readOnly":true,"type":["string","null"]}},"title":"ConstraintViolation"}},"application/json":{"schema":{"type":"object","description":"Unprocessable entity","properties":{"status":{"default":422,"type":"integer"},"violations":{"type":"array","items":{"type":"object","properties":{"propertyPath":{"type":"string","description":"The property path of the violation"},"message":{"type":"string","description":"The message associated with the violation"}}}},"detail":{"readOnly":true,"type":"string"},"type":{"readOnly":true,"type":"string"},"title":{"readOnly":true,"type":["string","null"]},"instance":{"readOnly":true,"type":["string","null"]}},"title":"ConstraintViolation"}}},"links":{}}}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -1,0 +1,8 @@
+{
+    "label": "Admin Guide",
+    "position": 2,
+    "link": {
+        "type": "generated-index",
+        "description": "Guides for administrators: configuration, backup, and deployment."
+    }
+}

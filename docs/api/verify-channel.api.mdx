@@ -1,0 +1,72 @@
+---
+id: verify-channel
+title: "Send verification email for this channel"
+description: "Creates a NotificationChannel resource."
+sidebar_label: "Send verification email for this channel"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWt9v2zYQ/leI28uGKbaX5slPTYMWy4CtRZpsD4Yx0NLJYkuRKknZMQz978ORkn9Jcpu0wLZCfrEt8Y7Hu+87foK4BV2g4U5odZvAFFZoRLr5O864UighAseXFqYz+EM7kYrYj7yp784jMGgLrSxamG7hcvILfSVoYyMKGgnTLkNm0OrSxMhig9xhAhHEWjlUjux5UcjaYCyTnz9Y8rMFG2eYcz9AyrcpTGdbcJsCYQp68QFjBxEUhpbjRIjnpXf66J1qhcc21hmhllBFn/Wy0jFf0K9TS8g2ieHtOxGgKnPKWuZcMR2P1+v1aP1ipM1yrOzYW41jbfAHmFcVJfFTKQwmZFHP1vieR8CTRFAuuHx3EJczJVbzKoKXIumM7WW40rpzOp+g7IfB8wiccJJG/0qz3zrMX3GL70PmP5+qEIpBnrxVchOCjBoboRwu0VBsPaF5FKRiub8128+kSin707E32NUgGNB6PagFJtfuzMAIUm1y7mAKCXd44USOPqQA0UPbvWmXSVUd5LED/SMCtEwu1MGthnAjyp2v0SEJ2gwYyvD5MpwtwtnsVxFIoT7Seuj31WTSbmu3asWlSJhQRemG/vV99K/aus2d49pfM5tp4yKWlTlXFzSYLyQyW+Y5NxumU+YyZIXRC4n5CKJeVpBnx4X8kjlPJsPHQnLlUcZsgTGhmTnNXCYs03FcGoMqxicFYx135RGNVZkv0BywEx95XkhK1+xqcjWnMFNeSgfTq8mkikAo67iKvyiLD3e3zGCKIVCXccdEgoqIidZHvVtY/4LYrWM53zBt/JfSjm0EyoSlpXEZGiZUaA+UKJGyBHdTJuez0QDw65dRx8q8x6iN9SOPfZ27o6dW83Y0BguDFpULK9Ypi3Wea8XQGG2sX3JNktd0pd6OWptOHXNH+zrl0DMiGGg30O7fpl11QoRnyK4B+QPyvw/ktyTvi7bkfaPNQiQJqkHuDnJ36D5D9xnk7rDpD7T7n9BukLsD8gfk98jdy8u23L2ucdzkZnhL9Z3I3j0L99y6vOx6QbISWvoKH3AWuDF8AxEIh7ntapPHs9X/Nu+4y7qKcAy6+4Bmb8EK7rKGjrtQKK4creXLjrx1uasHM26tjgW9RGFr4bJTr54U/d3yeSLuYHwf29sD+zaJ/k5yrik+QU0+qMLomNLlNwDlhNsc6McbrawzXCj3Z5O2b60meyIY8Pvt8fufw+NZoH21WhuQNSCrD1lHaui0tcONf/NuGWfnjvJ4sc8Nz9GhsV7CKJ571NDWLcgTVa1ViC6nO3lHynivAxp5WBiM/bGhacqlxahNgn2Ordv4lVtBsppEz2MhdYK1bTUPE6B1r3SyaatAwonC9dm1P1EYnrLiyccUwiGtZ7SE589UndbBc81lmg6NFdp6dnsew5gXYtzlzY63IqnGtc8ILJpVg5XSSDJtoQOoQBbj0lC/opEL5AbNdUlzzeaHt70ADK3lcNAuDSRzoQYL/Q+DIKp/vGkOkfz21z0hh76eaVxFQMW42wPrdXisI4YRGVJ98DgM10awm7vf24v3Z2Zs+DMZTUYTiouynXNf6Zph71ElLJyuCRlnmHMhWapNeFzdH+c7UW072D6B5XVC6JFlXEgufN/19dvWEJgBLwT1ny4QQART3xJqHMwjyAg/0xlstwtu8cHIqqLLn0o0VPN5BCtuBG1cHgGJ8JvYnv69i/rxrsbsT52rOmoznctqNjZFeF1xWWIoy0fchM7mH24y5AkaH1u4cRMiuLgPz6ONYYus9KwSLK7jGAvXM7bpIgT2HenevX1/T/Cru1buexoYvqaWydchTl3s9mh/bQuSq2Xpd0gIPunzD/Xcs38=
+sidebar_class_name: "post api-method"
+info_path: docs/api/ari-crm
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Send verification email for this channel"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/api/notification_channels/{id}/verify"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Creates a NotificationChannel resource.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"name":"id","in":"path","description":"NotificationChannel identifier","required":true,"deprecated":false,"schema":{"type":"string"},"style":"simple","explode":false}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"description":"The new NotificationChannel resource","content":{"application/ld+json":{"schema":{"type":"object","title":"NotificationChannel-notification_channel.verify"}},"application/json":{"schema":{"type":"object","title":"NotificationChannel-notification_channel.verify"}}},"required":true}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"201":{"description":"NotificationChannel resource created","content":{"application/ld+json":{"schema":{"allOf":[{"type":"object","properties":{"@context":{"oneOf":[{"type":"string"},{"type":"object","properties":{"@vocab":{"type":"string"},"hydra":{"type":"string","enum":["http://www.w3.org/ns/hydra/core#"]}},"required":["@vocab","hydra"],"additionalProperties":true}]},"@id":{"type":"string"},"@type":{"type":"string"}},"required":["@id","@type"],"title":"HydraItemBaseSchema"},{"type":"object","properties":{"id":{"readOnly":true,"type":"integer"},"type":{"type":"string"},"config":{"type":["object","null"],"additionalProperties":{"type":["string","null"]}},"verifiedAt":{"type":["string","null"],"format":"date-time"},"createdAt":{"type":"string","format":"date-time"}}}],"title":"NotificationChannel.jsonld-notification_channel.read"}},"application/json":{"schema":{"type":"object","properties":{"id":{"readOnly":true,"type":"integer"},"type":{"type":"string"},"config":{"type":["object","null"],"additionalProperties":{"type":["string","null"]}},"verifiedAt":{"type":["string","null"],"format":"date-time"},"createdAt":{"type":"string","format":"date-time"}},"title":"NotificationChannel-notification_channel.read"}}},"links":{}},"400":{"description":"Invalid input","content":{"application/ld+json":{"schema":{"allOf":[{"type":"object","properties":{"@context":{"oneOf":[{"type":"string"},{"type":"object","properties":{"@vocab":{"type":"string"},"hydra":{"type":"string","enum":["http://www.w3.org/ns/hydra/core#"]}},"required":["@vocab","hydra"],"additionalProperties":true}]},"@id":{"type":"string"},"@type":{"type":"string"}},"required":["@id","@type"],"title":"HydraItemBaseSchema"},{"type":"object","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"},"description":{"readOnly":true,"type":["string","null"]}}}],"description":"A representation of common errors.","title":"Error.jsonld"}},"application/problem+json":{"schema":{"type":"object","description":"A representation of common errors.","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"}},"title":"Error"}},"application/json":{"schema":{"type":"object","description":"A representation of common errors.","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"}},"title":"Error"}}},"links":{}},"403":{"description":"Forbidden","content":{"application/ld+json":{"schema":{"allOf":[{"type":"object","properties":{"@context":{"oneOf":[{"type":"string"},{"type":"object","properties":{"@vocab":{"type":"string"},"hydra":{"type":"string","enum":["http://www.w3.org/ns/hydra/core#"]}},"required":["@vocab","hydra"],"additionalProperties":true}]},"@id":{"type":"string"},"@type":{"type":"string"}},"required":["@id","@type"],"title":"HydraItemBaseSchema"},{"type":"object","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"},"description":{"readOnly":true,"type":["string","null"]}}}],"description":"A representation of common errors.","title":"Error.jsonld"}},"application/problem+json":{"schema":{"type":"object","description":"A representation of common errors.","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"}},"title":"Error"}},"application/json":{"schema":{"type":"object","description":"A representation of common errors.","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"}},"title":"Error"}}},"links":{}},"422":{"description":"An error occurred","content":{"application/ld+json":{"schema":{"allOf":[{"type":"object","properties":{"@context":{"oneOf":[{"type":"string"},{"type":"object","properties":{"@vocab":{"type":"string"},"hydra":{"type":"string","enum":["http://www.w3.org/ns/hydra/core#"]}},"required":["@vocab","hydra"],"additionalProperties":true}]},"@id":{"type":"string"},"@type":{"type":"string"}},"required":["@id","@type"],"title":"HydraItemBaseSchema"},{"type":"object","properties":{"status":{"default":422,"type":"integer"},"violations":{"type":"array","items":{"type":"object","properties":{"propertyPath":{"type":"string","description":"The property path of the violation"},"message":{"type":"string","description":"The message associated with the violation"}}}},"detail":{"readOnly":true,"type":"string"},"description":{"readOnly":true,"type":"string"},"type":{"readOnly":true,"type":"string"},"title":{"readOnly":true,"type":["string","null"]},"instance":{"readOnly":true,"type":["string","null"]}}}],"description":"Unprocessable entity","title":"ConstraintViolation.jsonld"}},"application/problem+json":{"schema":{"type":"object","description":"Unprocessable entity","properties":{"status":{"default":422,"type":"integer"},"violations":{"type":"array","items":{"type":"object","properties":{"propertyPath":{"type":"string","description":"The property path of the violation"},"message":{"type":"string","description":"The message associated with the violation"}}}},"detail":{"readOnly":true,"type":"string"},"type":{"readOnly":true,"type":"string"},"title":{"readOnly":true,"type":["string","null"]},"instance":{"readOnly":true,"type":["string","null"]}},"title":"ConstraintViolation"}},"application/json":{"schema":{"type":"object","description":"Unprocessable entity","properties":{"status":{"default":422,"type":"integer"},"violations":{"type":"array","items":{"type":"object","properties":{"propertyPath":{"type":"string","description":"The property path of the violation"},"message":{"type":"string","description":"The message associated with the violation"}}}},"detail":{"readOnly":true,"type":"string"},"type":{"readOnly":true,"type":"string"},"title":{"readOnly":true,"type":["string","null"]},"instance":{"readOnly":true,"type":["string","null"]}},"title":"ConstraintViolation"}}},"links":{}}}}
+>
+  
+</StatusCodes>
+
+
+      

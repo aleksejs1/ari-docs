@@ -1,0 +1,72 @@
+---
+id: login-check-post
+title: "Creates a user token."
+description: "Creates a user token."
+sidebar_label: "Creates a user token."
+hide_title: true
+hide_table_of_contents: true
+api: eJytVMFu2zAM/RWDZy0JdvQtCzZgw4YObYodAqNgbDZWI0uqJDcNDP37QNlJnAQZhmG+WJYeycfHJ3dgLDkM0uivFeSgzEbqp7KmcvtkjQ8gIODGQ76C73yULfgICgGOvDXak4e8g4+zGb8q8qWTlrNBDo+eXBbMlnRWOsJAFQgojQ6kA6PRWiXLVHv64jmkA1/W1CCvwt4S5GDWL1QyDeuYaZB9wZSWF46wutNqD3lwLYlDmA9O6g0I0K1SuFYE+TMqTzEy89dWOqq4qT5PEfkRF/wXibTPMGuPnUygjycfPplqf930sqYsiZhVGPD/NcwUNDY0Qt7sUYBF73fGVX+DvlDkWGiUpYjnKJY6Cmgo1IZdMzjFYqghhylaOR0ZCQR4cm/k2EYdtE4xCC7lhlgwsGydDPuEXBM6cvOWs66K8fEDq9YLMwYdm61DsFw2wSAfQCCGxRfjGgyQw7dfS4givf4xOArgUd6fPPH5HRur6HxoJ/lPoznsRQFSP5vEQAaOhLmT2eL+x7VGAljH/mM2mU1mHM3yN5jsNFS7Zd2zbN3JmzcDBkkCvYepVSg110sT7IZxrwCtBDH+c/DvoWZL5CvoujV6enQqRt5+bcnxcAsBb+hk78NVEQXUhBW5NPct7ZlST+7DkikwXLVM5eoSRXGImJcl2fBHbDFy7c+7hyVPdbjHjak4xuGO7zjuerlNEis5Le11oFBvWtwwts/Jz28uMs/a
+sidebar_class_name: "post api-method"
+info_path: docs/api/ari-crm
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Creates a user token."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/api/login_check"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Creates a user token.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"description":"The login data","content":{"application/json":{"schema":{"type":"object","properties":{"username":{"type":"string","nullable":false},"password":{"type":"string","nullable":false}},"required":["username","password"]}}},"required":true}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"User token created","content":{"application/json":{"schema":{"type":"object","properties":{"token":{"readOnly":true,"type":"string","nullable":false}},"required":["token"]}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -1,0 +1,72 @@
+---
+id: api-logout-post
+title: "Log out (revoke refresh token)"
+description: "Revokes the refresh token provided in the body or cookies."
+sidebar_label: "Log out (revoke refresh token)"
+hide_title: true
+hide_table_of_contents: true
+api: eJzVVMFu2zAM/RWBpw3TkqDoybeu2IAOHTa0GXYIgkKxmViNIqqUlDYw/O8D5bRNk52203ywZYlPJB8f2QEFZJMs+asGKjDB3jlaUU53gWICDcmsIlQzuMiphbkGxhjIR4xQdXA2OZdPg7FmG+QWqOC64FXMdY0xLrMDDc76tSD6XsP5ZHIKuvJb42yjrA85HQPOzk4BF14hM7Gius7M2LwB9frI/Aa3tMaoUouKcckYW5VojV4Fpq1tUFyX0wU1O0WsaqK1xTgCDcGw2WBCFiYKBw8ZY/pEze40sGmLyuOjEsIUY6TMNYKGmnxCnwRgQnC2LqyPXfPhPgqwg1i3uDGySruAUAEt7rEWNgJLmZIdWN/Hf1fi/3MAb1NMpLjkP1JXS+UpvSSt1aN1TjmiteR/kPMQwgxiYutXoMFn52AuzCabnIRXJCEbh/n858n0Q3WtCKpKnLHXsMHUknTHviWCSS1UMDbBjodmAQ0ReTsIpIPMTs7hWITQz8WwzmzTrlgu0DBy8V3N5ofHt8LfQNGh0QudbUpB3BYzqPZGoPeLL8Qbk6CCr7+m0Ovy+Utwr0GKevMq+s9PZhOEtZPyPTPca7B+ScXlM8Fs1eXNt1NSNAhxw89kNBlNBC1Ub0wRhDclxmtaKZkr74bqv1XF++Nru9d++7fe3zOW8CmNgzPWS3SlwN1eCDOZmjJ9BinMNbSik2oGXbcwEX+y63vZfsjIu2GCbA1bsxBeZvNeQ4umQS6KWOMOKrgcgv84Fe9i7jKW8XzUaKKYF3n++H47lRrux9KGGsGweQRd3oVrKgQNrSd7HTjjV9msxHa4U57fXVcZ4A==
+sidebar_class_name: "post api-method"
+info_path: docs/api/ari-crm
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Log out (revoke refresh token)"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/api/logout"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Revokes the refresh token provided in the body or cookies.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={[]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"description":"The new Auth resource","content":{"application/ld+json":{"schema":{"type":"object","properties":{"refresh_token":{"description":"The refresh token to revoke. If not provided, will look in cookies.","type":["string","null"]}},"title":"Auth"}},"application/json":{"schema":{"type":"object","properties":{"refresh_token":{"description":"The refresh token to revoke. If not provided, will look in cookies.","type":["string","null"]}},"title":"Auth"}}},"required":true}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"204":{"description":"Logout successful","links":{}},"400":{"description":"Invalid input","links":{}},"422":{"description":"An error occurred","links":{}}}}
+>
+  
+</StatusCodes>
+
+
+      

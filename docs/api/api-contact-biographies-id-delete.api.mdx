@@ -1,0 +1,72 @@
+---
+id: api-contact-biographies-id-delete
+title: "Removes the ContactBiography resource."
+description: "Removes the ContactBiography resource."
+sidebar_label: "Removes the ContactBiography resource."
+hide_title: true
+hide_table_of_contents: true
+api: eJztWd9v2zYQ/leI20uHcbax5klPSbsUy7CtQ9ZiD4YR0OIpYkuR7JFKYhj634ejFMexnDbrHoZhepIs3a/v+N3pSG/BBySVjHcXGgpQwVyV3iVVpqu18dekQm0wXhl9pdFiQpCQ1HWEYgmve7lXg9gGVhIIY/AuYoRiCz8sTviiMZZkAvuAYqQlCKNvqUTRO9DQSThZvBxrvvG0NlqjAwkcI7rEQioEa8oMYW71dx8iC28hljU2KgtY+7aCYrmFtAkIBfj1BywTSAjE6JPpwz3NRu+yUe/wsU5MZNw1dPKLVm58qdZ8d6gJ9UaTGr+RgK5tOKN1SqGYz29vb2e3L2eerucuzrPWvPSE38Cq6zjHn1pDqFlj8HZveyVBaW04F8r+vhdXoha7VSfh1OijsZ32T0ZvDv0ZDffCKwnJJMvSP7H3i4TNKxXxjz7zX07VoL0FQqXfOrvp45QH634mYu0pSVG3jXLfs7BaWxSxbRpFG+ErkWoUgfzaYjNjhma3y4cEu9ZaYPgakzL2OT4PnOFdsMpllokYsDSVKUXyItUmCl+WLRG6Ev9WMDGp1MaHpC/Btc0aaScjAe9UEyyna3myOFlxmJVqbYLiZLHoJBgXk3Lls7L4/vJCEFbYB5pqlYTR6JKpDMYc9Q7Y04DERRKN2ghP+eJ8EhuDVouqpVQjCeMqT02fKFMJjTuX+vPZuCfgP4cxxCqyRTnm+iOLY4dPhdh1q3E0hIEwoks9Yl+J0jeNdwKJPMUMeSiSc34y4/5kdS6s/c41xHykfR3W0FdEMJXdVHb/dtl1B4UwqoCJ+RPz/y/M7yRY4z7yUnR53D0yKP/mk6h86/Q07k7j7tR9pu4zjbvTR38qu/9I2U3j7sT8ifnHxt3DLxJcYuNvBtNPng5nditSDSakmEdVpxp2kkc0w4aCSvWobkYWd2CYBw/D3n0yAmGp+Bi6qJSNKMcF+vBljWmTcUbDJOLJ9i5Yr3HQ5Q9og6n2fLK+Oz7PURYwV8HMjxy1z7dGdyAhIt3cI23JssYIG7CHiGVLJm2y5BoVIZ217GK52n+dx9S+L+wL7VDxMA4DWv7dC4Ecbt5k0kEBP//5jqHz5SuVc1lVfq9DwRkZ8fry1zFACZyE/sditpgt2HfwMTUqd8+BA8+m0MEstNtXPd/CgJh3TvNglXEcUV6g7bC0S/4XZdi0HSwuSCiM5sZT+5hYdLtdq4jvyXYdP/7UIvFKriTcKDLcGvO6ahP5/oGVTwJ5cTlQ+tsxjkfUPwpkeKjchlOvbIv9KnzETV9qeVdVo9JIObD+xVlZYkh7Ksd2qY/K4cfzX87fnUPX/QV+TEFy
+sidebar_class_name: "delete api-method"
+info_path: docs/api/ari-crm
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Removes the ContactBiography resource."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/api/contact_biographies/{id}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Removes the ContactBiography resource.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"name":"id","in":"path","description":"ContactBiography identifier","required":true,"deprecated":false,"schema":{"type":"string"},"style":"simple","explode":false}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"204":{"description":"ContactBiography resource deleted"},"403":{"description":"Forbidden","content":{"application/ld+json":{"schema":{"allOf":[{"type":"object","properties":{"@context":{"oneOf":[{"type":"string"},{"type":"object","properties":{"@vocab":{"type":"string"},"hydra":{"type":"string","enum":["http://www.w3.org/ns/hydra/core#"]}},"required":["@vocab","hydra"],"additionalProperties":true}]},"@id":{"type":"string"},"@type":{"type":"string"}},"required":["@id","@type"],"title":"HydraItemBaseSchema"},{"type":"object","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"},"description":{"readOnly":true,"type":["string","null"]}}}],"description":"A representation of common errors.","title":"Error.jsonld"}},"application/problem+json":{"schema":{"type":"object","description":"A representation of common errors.","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"}},"title":"Error"}},"application/json":{"schema":{"type":"object","description":"A representation of common errors.","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"}},"title":"Error"}}},"links":{}},"404":{"description":"Not found","content":{"application/ld+json":{"schema":{"allOf":[{"type":"object","properties":{"@context":{"oneOf":[{"type":"string"},{"type":"object","properties":{"@vocab":{"type":"string"},"hydra":{"type":"string","enum":["http://www.w3.org/ns/hydra/core#"]}},"required":["@vocab","hydra"],"additionalProperties":true}]},"@id":{"type":"string"},"@type":{"type":"string"}},"required":["@id","@type"],"title":"HydraItemBaseSchema"},{"type":"object","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"},"description":{"readOnly":true,"type":["string","null"]}}}],"description":"A representation of common errors.","title":"Error.jsonld"}},"application/problem+json":{"schema":{"type":"object","description":"A representation of common errors.","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"}},"title":"Error"}},"application/json":{"schema":{"type":"object","description":"A representation of common errors.","properties":{"title":{"readOnly":true,"description":"A short, human-readable summary of the problem.","type":["string","null"]},"detail":{"readOnly":true,"description":"A human-readable explanation specific to this occurrence of the problem.","type":["string","null"]},"status":{"type":["number","null"],"examples":[404],"default":400},"instance":{"readOnly":true,"description":"A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.","type":["string","null"]},"type":{"readOnly":true,"description":"A URI reference that identifies the problem type","type":"string"}},"title":"Error"}}},"links":{}}}}
+>
+  
+</StatusCodes>
+
+
+      

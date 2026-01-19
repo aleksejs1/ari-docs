@@ -1,0 +1,72 @@
+---
+id: event-types
+title: "Retrieves the collection of EventType resources."
+description: "Retrieves the collection of EventType resources."
+sidebar_label: "Retrieves the collection of EventType resources."
+hide_title: true
+hide_table_of_contents: true
+api: eJydV9+P2jgQ/lfQ3ON5Cb17y1P3ql7bk9qr9vbUhwidhmQAt47t2g4sivK/n8YJJEBgl+WFYM/v+Wa+UIOx5DBIoz8VkAJtSIf/ws6SBwEBVx7SDN7z6ePOEswFOPLWaE8e0hp+m834qyCfO2nZDKS9+CQ3SlEejwXkRgfSgeXRWiXz6DZRxa/fPevV4PM1lchPHAGkYBbfKQ8gLjmYsqYq7vqwp46wGPidggBU6u8lpFk9eDp1YB0XIsg2rWACqk+BSj8IRupAK3IgoJRallUJ6awR4Aldvh4L+tjm2/b6IOaDk3oFjYBApVUYxi836CQuFD2QdeRJB2yLMCJaorX82N+hc7gDAfIklZtD3EcxetkZ2fWX2f5WgK6UgnnDuPlZSUfFwMTCGEWooWk/AoIM7AM+7gqH7w5N/AM9/ROx8cV8xZXUbQ0a8VxCG0nbF6Qti/O8BCyNKzFw4528c7QkRzonTvhynZbS+XCbMYW3alhHG2kqf5uWpqeb/DQC6AlL2zY91qhXOjPS5t0ftFn1v/uYB9CIER2q1zTN/AUQGG17D64MSioX5HhVHbe5O78yHS9dD2/jKmvLaTQd6xzA8KyVjclxMQqjNSc/1izSvHYyWIdg0yTZbrfT7e9T41aJ9knUSnLj6BeYN81xVTpve9tzAVgUkkuL6usgruAqanheR6fiCvhP/ckC9sKnbeXN+kxDT/bxKHaPAfMcKbQA4zCH7HORem5cnZciHIlvNDCWPCa5BwpO0ob8JKyHTDoxy0nPsI68qVxOnonOosOSAjkfAamxZMcWV8SJsNGfFbndGZ8+HjtghYmu4rQMm7pE5Yl1raMcw+DorHo9Vxa0xEoFSN8wV4ZdrAXvHEbzk1WmoM4Mw6ALuePUq0H3NThIvyrUHtnXo5sLKCmsDe/BFUUEYFhDCglamWgT5LID1Z01Sua7JPb5bv8y5clt9p2pnGLFs5yAvXjKKyeZTrMaFoSO3H3FnrL58DoOTwu+odAhL14R0OUbyTYKgege/tyv/b++PXLy/PVK5Yb7tDRRvQP7vZOTdw+fzxMUwEVof8yms+ksEprxocQ4hx0AXgH+I0d1/7b5GltdFXioE6tQ8rtG27S663oGaCVz2HnfGTqDzs8FrA2TYQZ1vUBP/zrVNHzc4pq7XEjPb1dD4F5I5uqojob9g3b9EtigqigCTdzidWTWrvg6yPTe5sNXyIzpZU1YMBtndad1n+dkw0Br7E/C0RR+eM/g+x+u3Wq5
+sidebar_class_name: "get api-method"
+info_path: docs/api/ari-crm
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Retrieves the collection of EventType resources."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/api/notification-policy/event-types"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Retrieves the collection of EventType resources.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"name":"page","in":"query","description":"The collection page number","required":false,"deprecated":false,"schema":{"type":"integer","default":1},"style":"form","explode":false},{"name":"search","in":"query","description":"EventType search","required":false,"deprecated":false,"schema":{"type":"string"},"style":"form","explode":false}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"EventType collection","content":{"application/ld+json":{"schema":{"type":"object","description":"EventType.jsonld-event_type.read collection.","allOf":[{"allOf":[{"type":"object","properties":{"totalItems":{"type":"integer","minimum":0},"search":{"type":"object","properties":{"@type":{"type":"string"},"template":{"type":"string"},"variableRepresentation":{"type":"string"},"mapping":{"type":"array","items":{"type":"object","properties":{"@type":{"type":"string"},"variable":{"type":"string"},"property":{"type":["string","null"]},"required":{"type":"boolean"}}}}}}},"title":"HydraCollectionBaseSchemaNoPagination"},{"type":"object","properties":{"view":{"type":"object","properties":{"@id":{"type":"string","format":"iri-reference"},"@type":{"type":"string"},"first":{"type":"string","format":"iri-reference"},"last":{"type":"string","format":"iri-reference"},"previous":{"type":"string","format":"iri-reference"},"next":{"type":"string","format":"iri-reference"}},"example":{"@id":"string","type":"string","first":"string","last":"string","previous":"string","next":"string"}}}}],"title":"HydraCollectionBaseSchema"},{"type":"object","required":["member"],"properties":{"member":{"type":"array","items":{"allOf":[{"type":"object","properties":{"@context":{"oneOf":[{"type":"string"},{"type":"object","properties":{"@vocab":{"type":"string"},"hydra":{"type":"string","enum":["http://www.w3.org/ns/hydra/core#"]}},"required":["@vocab","hydra"],"additionalProperties":true}]},"@id":{"type":"string"},"@type":{"type":"string"}},"required":["@id","@type"],"title":"HydraItemBaseSchema"},{"type":"object","properties":{"text":{"type":"string"}}}],"title":"EventType.jsonld-event_type.read"}}}}]}},"application/json":{"schema":{"type":"array","items":{"type":"object","properties":{"text":{"type":"string"}},"title":"EventType-event_type.read"}}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

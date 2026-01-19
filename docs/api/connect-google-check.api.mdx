@@ -1,0 +1,72 @@
+---
+id: connect-google-check
+title: "Handle Google OAuth Callback."
+description: "Exchanges the authorization code for an access token and stores it."
+sidebar_label: "Handle Google OAuth Callback."
+hide_title: true
+hide_table_of_contents: true
+api: eJytVE1v00AQ/SurOYFkJRHi5FupSgEJIbVFHKocJutJvM16dzs7rhqs/Hc0a4emTTmA8MX2ej7em/fGA8REjOJi+NxADTaGQFYuY9x4Om/JbqECwU2G+hbGU1hWwJRTDJky1AO8Wyz01lC27JKWgnqKNWe9tOa6t5ZyXvceKu0gFEQzMCXvbGk+v8uaNkC2LXWoT7JLBDXE1R1ZgQoSK1RxY9M81jwKXMXoCQNUQI/YJU9QC/e0L1cF719D+QEbc0X3PWX5f9CIOfJRWBZ2YQP7A5LnEC4ebYthQ9lISwZ7aSO7n6WzsbEhs45sMBgsfI3ELQWDoTFZIlM2TmaKABk7EmIVaoCAHRU1G4IKnPa574l38LL7zes9maTnQI1Z7cykuop+3zumZpyrVkpMFkVP1ugzVacjOnCvIMtOJYF15K5olLyiGzP3ywo6kjaqBzdUZorSQg1zTG4+uXK+KVDmdvJlJn44MO7Za/QJQdDSmWzPTnYlckXIxGpMqG+Xx5+vFf2o4XHQbzKtSIKJZHFcCYJqevgYuUOBGr78uFHGevvH5L2Kto4l3UmZ2xk7c3719ZRgBTqE8WUxW8wW2jvFLB0W205e+ISh8TSpab6VxTxH71dot7OXVYenXfhPBp2mIPQo8+TRBUVZRBsmqW8Bkxu3MIxrtTk4bxR8WUEbs2jkMKww03f2+70ej95WcRuXceWPHPlHWm+uJju/NX+zBK/y2NLuadse0Pd0cN4DslNAxWoVtIQNcUE65pxZS0mOsk5+PM9W4/JCzfELIqb12Q==
+sidebar_class_name: "get api-method"
+info_path: docs/api/ari-crm
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Handle Google OAuth Callback."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/api/connect/google/check"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Exchanges the authorization code for an access token and stores it.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"name":"code","in":"query","description":"The authorization code returned by Google","required":true,"deprecated":false,"schema":{"type":"string"},"style":"form","explode":false}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Google Auth Successful","content":{"application/json":{"schema":{"type":"object","properties":{"success":{"type":"boolean","example":true}}}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"string"}}}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

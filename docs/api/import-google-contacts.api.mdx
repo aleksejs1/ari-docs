@@ -1,0 +1,72 @@
+---
+id: import-google-contacts
+title: "Import contacts from Google People API."
+description: "Triggers an import of contacts using the stored Google OAuth token for the current user."
+sidebar_label: "Import contacts from Google People API."
+hide_title: true
+hide_table_of_contents: true
+api: eJy1VE1v2zAM/SsCz1qSDTv5lhbb0AFDizbDDmlQKDZjq7UllaLbBob/+0DZbrOm2GHofPHXI/n4+MQOfEAybL07KyAD2wRP/M37ssZT79jkHEEDmzJCtobhB2w0EMbgXcQIWQefFgu5FRhzskGSQQZTuBpyYqFim+cY466t6z1oyL1jdCyRJoTa5onG/DZKeAcxr7Ax8sT7gJCB395izqAhkJBmOxSf0h8grWMskUADPpkm1AjZx0WfLg2f3yJ7Ygp1ifctRn4/Zkjk6QAWmawroZ+Y/ElhRbYskaIybpRM+Z3KJxXbaF2puEIV2RMWapiFOl+2XCn2d+jUzlNC5C0ROlZtRJqBDCt1duKL/XHrZ2Ot9B7fr3tTFDdl4nhTkm/DQcTW+xqNg9cSnO0UU4tamaKIyqhrGBJcg0opFHtl6vrFUZM6s8NRS4pRYWncknhjZ+qIvYYGufLi9ODTqIPhCjKYm2DnQ7H5kB00RKQHJDF+By3VAjuiDP1GgHlLlvcJuUVDSDIVyNabw99XotwgziHoWZaKOUjZBBOZEgj0+PDVU2MYMvj+awW9Trd/DO41yDgvX3zxZVLvrcElRTVYt/OpomVBwpKsOr38cayJBtFteFnMFrOF0BXBG5Ms5EyiODrv2eI78s1k6wv0oUa1vDibvc7fvTj0fx6aUVfGJ56H2lgnTSQbdKNr1mCCBT2aFPS4imQ9VuKubA1dtzURf1Ld9/L5vkUSl2w0PBiyZis6rje9hgpNgZQMdIf7cX2i4w8roSHwuhU6Ryey11PEMs8x8F+xm4MDcHF+tRJ7jEuh8YXEkHmUhWEehzlOWyHrhm8d1MaVrSkFO+SU6zdB1i3o
+sidebar_class_name: "post api-method"
+info_path: docs/api/ari-crm
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Import contacts from Google People API."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/api/google/import"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Triggers an import of contacts using the stored Google OAuth token for the current user.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"description":"Import options","content":{"application/json":{"schema":{"type":"object","properties":{"add_google_group":{"type":"boolean","description":"If true, adds a \"google\" group to all imported contacts.","example":true}}}}},"required":false}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Contacts imported successfully","content":{"application/json":{"schema":{"type":"object","properties":{"imported":{"type":"integer","example":10}}}}}},"400":{"description":"Bad Request","content":{"application/json":{"schema":{"type":"object","properties":{"error":{"type":"string"}}}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
