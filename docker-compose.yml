@@ -1,0 +1,12 @@
+services:
+  ari-docs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ari-docs:latest
+    container_name: ari-docs-prod
+    restart: unless-stopped
+    ports:
+      - "${PORT:-4000}:80"
+    environment:
+      - NODE_ENV=production
