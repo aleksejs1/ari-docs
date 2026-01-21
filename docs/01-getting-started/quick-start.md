@@ -19,10 +19,15 @@ Open your web browser and navigate to:
 
 Ari defaults to a secure setup with no public registration. To get started, generate a **Demo Account**. This will create a user with populated data (contacts, groups, etc.) so you can explore the features immediately.
 
-Run the following command in your terminal (where Docker is running):
+Run the following command in your terminal.
+> **Note:** If you used the **NAS / Docker Hub** setup, your container is likely named `ari`. If you installed **from source**, it is `ari-prod-app`.
 
 ```bash
-docker exec -it ari-prod-app php bin/console app:generate-demo-account
+# For NAS / Docker Hub setup:
+docker exec -it ari php bin/console app:generate-demo-account
+
+# For Source / Dev setup:
+# docker exec -it ari-prod-app php bin/console app:generate-demo-account
 ```
 
 **Output Example:**

@@ -4,6 +4,7 @@ title: Docker & NAS Setup
 sidebar_label: Docker Setup
 ---
 
+
 # Docker & NAS Setup
 
 This guide explains how to deploy Ari CRM in a production-ready environment using the optimized **FrankenPHP** setup.
@@ -12,66 +13,107 @@ This guide explains how to deploy Ari CRM in a production-ready environment usin
 
 - **Docker** and **Docker Compose** installed.
 - **Port 8080** (or your chosen port) available.
-- **MariaDB/MySQL** (optional, opt-in).
 
 ---
 
-## 1. Database Configuration
+## 1. Choose Installation Method
 
-Ari CRM supports two database modes: **SQLite** (default) and **MySQL/MariaDB**.
+### Option A: Docker Hub (Recommended for NAS)
+**Best for:** NAS (Synology, QNAP, Unraid), Home Servers, Quick Setup.
+- No need to clone git repository.
+- Single `docker-compose.yml` file.
+- Automatic updates via Watchtower (optional).
 
-### Option A: SQLite (Default)
-**Best for:** Personal use, small teams, simplest setup.
-- Zero configuration required.
-- Data stored in `core/var/data.db`.
-- No additional database container running.
+### Option B: From Source (SQLite)
+**Best for:** Developers, Contributors, Custom Builds.
+- Requires cloning the repository.
+- Full access to source code and configuration files.
 
-### Option B: MySQL / MariaDB (Opt-out)
-**Best for:** Larger datasets, high concurrency, existing infrastructure.
-- Requires enabling the `mysql` Docker profile.
-- Uses a separate `database` container.
-- Requires configuration in `.env`.
-
----
-
-## 2. Prepare Environment Variables
-
-Use the provided helper script or manually create a `.env` file.
-
-**Option A: Automatic Setup (Recommended)**
-```bash
-./setup_prod.sh
-```
-
-**Option B: Manual Setup**
-1. Create a `.env` file from `.env.prod.example`.
-2. **If using MySQL**: Uncomment and fill in `DB_CONNECTION=mysql`, `COMPOSE_PROFILES=mysql` and the `MARIADB_` variables.
-3. **If using SQLite**: You can leave the database variables commented out or remove them; it defaults to SQLite.
+### Option C: From Source (MySQL / MariaDB)
+**Best for:** High Concurrency, Large Deployments.
+- Requires cloning the repository.
+- Uses external database container.
 
 ---
 
-## 3. Build and Start the Containers
+## 2. Installation Steps
 
-### For SQLite (Default)
-```bash
-docker compose -f compose.prod.yaml up -d --build
+### Option A: Docker Hub Setup (Fastest)
+
+1. Create a folder on your server/NAS (e.g., `/volume1/docker/ari`).
+2. Create a `docker-compose.yml` file with the following content:
+
+```yaml
+services:
+  ari:
+    image: aleksejs0/ari-app:latest
+    container_name: ari
+    restart: unless-stopped
+    environment:
+      - APP_ENV=prod
+    volumes:
+      - ./data:/app/core/var
+    ports:
+      - "8080:8080"
 ```
 
-### For MySQL
-You need to activate the `mysql` profile and ensure `DB_CONNECTION=mysql` is set in your environment (or `.env` file).
-
+3. Start the container:
 ```bash
-# Set env var for this session or add to .env
-export COMPOSE_PROFILES=mysql
-docker compose -f compose.prod.yaml up -d --build
+docker compose up -d
 ```
 
-### What happens automatically:
-- **JWT Keys**: Generated on the first run.
-- **Database**: 
-    - **SQLite**: The database file is created and schema updated automatically.
-    - **MySQL**: Migrations are applied automatically.
-- **Frontend/Backend**: Served via FrankenPHP on the configured port.
+**Alternative: Docker Run (No Compose)**
+If you prefer a single command line:
+```bash
+docker run -d \
+  --name ari \
+  --restart unless-stopped \
+  -p 8080:8080 \
+  -e APP_ENV=prod \
+  -v $(pwd)/data:/app/core/var \
+  aleksejs0/ari-app:latest
+```
+
+### Option B: From Source (SQLite)
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/aleksejs1/ari.git
+   cd ari
+   ```
+2. Run the setup script:
+   ```bash
+   ./setup_prod.sh
+   ```
+3. Start the containers:
+   ```bash
+   docker compose -f compose.prod.yaml up -d --build
+   ```
+
+### Option C: From Source (MySQL)
+
+1. Clone the repository and run setup as in Option B.
+2. Edit `.env` file and uncomment MySQL settings:
+   ```env
+   DB_CONNECTION=mysql
+   # fill in DB details
+   ```
+3. Enable MySQL profile and start:
+   ```bash
+   export COMPOSE_PROFILES=mysql
+   docker compose -f compose.prod.yaml up -d --build
+   ```
+
+---
+
+## 3. What Information is Stored?
+
+By default (Option A & B), all your data includes:
+- **Database**: SQLite file stored in `./data/data.db` (Option A) or `core/var/data.db` (Option B).
+- **Logs**: Application logs.
+
+**Backup Strategy:**
+Simply back up the mapped volume folder (e.g., `./data` or `core/var`).
 
 ---
 
@@ -82,28 +124,18 @@ Open your browser and navigate to:
 
 ---
 
-## Maintenance and Updates
+## Maintenance
 
-### Pulling Updates
+### Updating (Option A)
 ```bash
-git pull
-# Re-run the start command appropriate for your DB choice
-docker compose -f compose.prod.yaml up -d --build
+docker compose pull
+docker compose up -d
 ```
 
 ### Viewing Logs
 ```bash
-docker compose -f compose.prod.yaml logs -f app
+docker logs -f ari
 ```
-
-### Backup
-**SQLite**:
-- Backup the `core/var/data.db` file.
-
-**MySQL**:
-- Backup the `database_data` volume or use `mysqldump`.
-
----
 
 ## Background Tasks
 
@@ -111,5 +143,5 @@ The application runs periodic tasks via `cron` inside the main application conta
 
 ### Monitoring Tasks:
 ```bash
-docker exec ari-prod-app tail -f /app/core/var/log/cron.log
+docker exec ari tail -f /app/core/var/log/cron.log
 ```

@@ -17,11 +17,17 @@ Ari is designed to be self-hosted using **Docker**. This ensures a consistent en
 *   **Software**: Docker Engine & Docker Compose
 *   **Hardware**: Minimum 1GB RAM, 10GB Disk Space
 
+
 ## Production Installation
 
-For the recommended production setup (e.g., on a NAS or VPS), please follow our detailed guide:
+We recommend the **Docker Hub** method for most users (NAS, Home Server), as it requires no git or build steps.
 
 👉 **[Docker & NAS Setup Guide](../02-admin-guide/docker-setup.md)**
+
+### Installation Options
+
+1.  **Docker Hub (Recommended)**: Best for Synology, QNAP, or simple VPS setup. No `git` required.
+2.  **From Source**: Best for developers or if you need to customize the code.
 
 ### Fast Track (Automatic Setup)
 
