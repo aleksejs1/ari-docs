@@ -143,7 +143,7 @@ make cs-fix
 
 For a full list of commands and technical details about the test environment, see [QA and Testing Infrastructure](testing).
 
-### Legacy / Direct Container Access
+### 10. Legacy / Direct Container Access
 If you need to execute commands directly in the development container:
 ```bash
 # Access container
@@ -161,7 +161,20 @@ The `ContactDate` collection (Dashboard Upcoming Anniversaries) supports filteri
     *   It dynamically constructs DQL using `OR` between rules, filtering by `contactGroup` (using `EXISTS`), specific `contact`, and `eventType` (case-insensitive text matching).
     *   If no rules are active for a policy, the collection returns empty by default to respect the policy constraints.
 
-### 10. File Storage (Avatars)
+### 11. Contact Graph Filtering
+
+The `/api/contact-graph` endpoint supports advanced filtering via `ContactGraphProvider`:
+
+- **Level Filtering**: Using `contactId` and `level` (default 1).
+  - `level=1`: Returns the contact and its direct relations.
+  - `level=2`: Returns the contact, its relations, and their relations (2nd degree).
+- **Group Filtering**: Using `groupId`.
+  - Returns all members of the group and all their 1st-degree connections.
+
+These filters are useful for visualizing social circles or group-specific networks.
+
+### 12. File Storage (Avatars)
+
 The application supports contact avatar uploads with abstracted storage.
 - **Abstraction**: Uses `league/flysystem-bundle` for storage abstraction.
 - **Drivers**: Supports `local` (default) and `s3` (AWS/Minio) drivers, switchable via environment variables.
