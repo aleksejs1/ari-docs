@@ -71,6 +71,7 @@ src/
 - **User Menu**: Quick access to system utilities (Audit Logs, Settings) and user profile actions via the top-right header menu.
 - **Logo Navigation**: Clicking the application logo in the sidebar redirects to the Dashboard/Home page.
 - **Dashboard**: A dynamic widget system (`DynamicDashboard`) that displays key information using interchangeable widgets registered in `WidgetRegistry`. Includes widgets for **System Stats** (total contacts, logs, notifications), **Groups**, **Upcoming Anniversaries**, and **Recent Activity**.
+- **Contact Details**: Uses a **Plugin-first Architecture** controlled via `ContactDetailsRegistry`. Individual sections (cards) are registered as independent "Smart Sections" that handle their own data mutations.
 - **Form Layout**: Contact creation/editing uses a `ContactModalForm` (Dialog) with a streamlined, Google Contacts-inspired layout (single column, icons). Other large forms may use `CollapsibleSection` to group fields.
 - **Layouts**: The application uses two main layouts: `DashboardLayout` (with sidebar) for most pages and `SidebarLessLayout` (no sidebar, simplified) for the Home and Contacts pages.
 - **Sidebar**: In `DashboardLayout`, the sidebar provides navigation to secondary features (Audit Logs, Groups, Settings etc). On desktop it is always visible; on mobile it is hidden and accessible via a hamburger menu (using the `Sheet` component). It does not contain Home or Contacts links, nor user/session controls (which are in the header).
