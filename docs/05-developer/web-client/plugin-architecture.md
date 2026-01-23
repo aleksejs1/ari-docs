@@ -47,3 +47,13 @@ A **Plugin** is a class that implements the `Plugin` interface and uses these re
 -   `dashboard`: Routes rendered inside `DashboardLayout`.
 -   `sidebar-less`: Routes rendered inside `SidebarLessLayout`.
 -   `public`: Routes accessible before login.
+## Existing Plugins
+
+| Plugin Name | Directory | Description |
+| :--- | :--- | :--- |
+| **Audit Logs** | `src/plugins/audit-logs` | Provides the "Activity History" features, including the timeline view for contacts, the sidebar history page, and the dashboard widget. |
+| **Contacts** | `src/plugins/contacts` | Manages the Contact Details page layout and sections (General Info, Dates, Relations, etc.) via `ContactDetailsRegistry`. |
+| **Contact Graph** | `src/plugins/contact-graph` | Visualization of contact relationships. |
+| **Google Import** | `src/plugins/google-import` | Imports contacts from Google. |
+| **Notifications** | `src/plugins/notifications` | Manages notification channels and policies. |
+| **Sessions** | `src/plugins/sessions` | Manages active user sessions. |
