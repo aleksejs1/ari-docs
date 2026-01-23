@@ -7,20 +7,25 @@ sidebar_label: Architecture
 
 This document provides a high-level overview of the `web-client` project architecture to assist with navigation and development.
 
-## Technology Stack
+## Overview
 
-- **Framework**: React 19 with TypeScript
-- **Build Tool**: Vite
-- **Routing**: React Router 7
-- **State Management & Data Fetching**: TanStack Query (React Query)
-- **Styling**: Tailwind CSS with `shadcn/ui` (Radix UI) components
-- **Forms**: React Hook Form using Zod for validation
-- **HTTP Client**: Axios
-- **Internationalization**: i18next (en, ru)
-- **Testing**: Vitest, React Testing Library
-- **Code Quality**: ESLint, Prettier, Stylelint, Dependency Cruiser, Knip
+The application follows a **Plugin-Oriented Architecture**. The core framework provides a shell and a set of **Registries** (Routes, Sidebar, Menu, Widgets). Business features (such as Contacts, Audit Logs) are implemented as self-contained plugins that register their own UI and logic into these registries.
 
-## Directory Structure
+## Core Concepts
+
+### Registry System
+The application is built around several singleton Registries that allow plugins to inject content:
+-   **`RouteRegistry`**: For defining pages and routing.
+-   **`SidebarRegistry`**: For main navigation.
+-   **`UserMenuRegistry`**: For top-right profile menu.
+-   **`WidgetRegistry`**: For dashboard widgets.
+-   **`ContactDetailsRegistry`**: For extending the contact profile.
+-   **`ContactFormRegistry`**: For extending the contact edit form.
+
+### Plugins
+A Plugin is a cohesive unit of functionality located in `src/plugins/`. It implements a standard interface to register its components during application bootstrap (`src/main.tsx`).
+
+---
 
 The project follows a **Feature-Based Architecture** (inspired by Feature-Sliced Design), where code is organized by business domain rather than technical layer.
 
