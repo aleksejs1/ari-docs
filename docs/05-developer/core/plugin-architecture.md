@@ -54,7 +54,7 @@ Plugins fully inherit the Core's security architecture.
     - The global `TenantFilter` automatically applies to plugin entities, preventing cross-tenant data access.
 - **Automatic Assignment**: API Resources should use `processor: \App\State\UserOwnerProcessor::class` to automatically assign the current user as the tenant upon creation.
 
-For more details, see [Core Architecture](../ARCHITECTURE.md#1-multi-tenancy).
+For more details, see [Core Architecture](./architecture.md#1-multi-tenancy).
 
 ## 5. Migrations
 
