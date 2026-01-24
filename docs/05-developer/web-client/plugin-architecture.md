@@ -54,6 +54,10 @@ A **Plugin** is a class that implements the `Plugin` interface and uses these re
 | **Audit Logs** | `src/plugins/audit-logs` | Provides the "Activity History" features, including the timeline view for contacts, the sidebar history page, and the dashboard widget. |
 | **Contacts** | `src/plugins/contacts` | Manages the Contact Details page layout and sections (General Info, Dates, Relations, etc.) via `ContactDetailsRegistry`. |
 | **Contact Graph** | `src/plugins/contact-graph` | Visualization of contact relationships. |
+| **Dashboard** | `src/plugins/dashboard` | Manages the home dashboard layout and widgets. |
 | **Google Import** | `src/plugins/google-import` | Imports contacts from Google. |
+| **Groups** | `src/plugins/groups` | Manages contact groups (creation, editing, deletion). |
 | **Notifications** | `src/plugins/notifications` | Manages notification channels and policies. |
 | **Sessions** | `src/plugins/sessions` | Manages active user sessions. |
+| **Settings** | `src/plugins/settings` | Manages the application settings page. |
+| **User Security** | `src/plugins/user-security` | Manages password change and account deletion features. |
