@@ -41,12 +41,50 @@ A **Plugin** is a class that implements the `Plugin` interface and uses these re
     new MyPlugin().register()
     ```
 
+## Plugin Types
+
+### Internal Plugins
+
+Internal plugins live in `src/plugins/` within the web client. They are bundled at build time and mapped in `src/pluginMap.ts`. Registration happens via direct import.
+
+### Remote Plugins (External)
+
+Remote plugins are built as standalone ES module bundles in separate repositories. They are discovered at runtime via the `GET /api/plugins` endpoint and loaded dynamically using native `import()`.
+
+The `PluginLoader` singleton manages the full lifecycle:
+1. Fetches the list of enabled plugins from `GET /api/plugins`.
+2. Merges them with internal plugins from `PLUGIN_MAP`.
+3. For each plugin with a `url` field, calls `loadRemotePlugin(url)` which uses dynamic `import()`.
+4. Instantiates the plugin class (default export) and calls `register(context)`.
+
+The `context` object passed to `register()` includes all registries (`RouteRegistry`, `SidebarRegistry`, `UserMenuRegistry`, `TopMenuRegistry`, `WidgetRegistry`, `SettingsRegistry`), the `i18n` instance, and the `api` (axios) client.
+
+### Import Maps
+
+Remote plugins are ES modules that reference shared dependencies like `react`, `react-dom`, and `@personal-ari/plugin-sdk` as bare specifiers. The browser resolves these via the **import map** in `index.html`:
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@19.2.0",
+      "react-dom": "https://esm.sh/react-dom@19.2.0",
+      "@personal-ari/plugin-sdk": "/assets/sdk.js",
+      ...
+    }
+  }
+</script>
+```
+
+This ensures remote plugins share the same React instance and SDK as the host application, avoiding duplicate copies and version conflicts.
+
 ## Registration Logic
 
 ### Routing Slots
 -   `dashboard`: Routes rendered inside `DashboardLayout`.
 -   `sidebar-less`: Routes rendered inside `SidebarLessLayout`.
 -   `public`: Routes accessible before login.
+
 ## Existing Plugins
 
 | Plugin Name | Directory | Description |

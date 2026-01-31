@@ -176,3 +176,143 @@ new MyFeaturePlugin().register()
 - [ ] **Fast Refresh:** Does editing a component file update the page without a full reload? (Ensure exported components are in separate files).
 - [ ] **Tests:** Did you add tests for your widgets and pages?
 - [ ] **Translation:** Are hardcoded strings extracted to `i18n`?
+
+---
+
+## External Plugins
+
+External plugins are standalone projects that live outside the main repository. They are built as ES module bundles and loaded at runtime by the `PluginLoader`.
+
+### Prerequisites
+
+Install the Plugin SDK:
+
+```bash
+npm install @personal-ari/plugin-sdk
+```
+
+The SDK provides:
+- **Vite build configuration** — pre-configured build that externalizes shared dependencies (React, react-router-dom, etc.)
+- **Vitest test configuration** — test setup with proper module resolution
+- **TypeScript types** — `BasePlugin` interface, registry types, and context types
+- **Tailwind preset** — shared Tailwind CSS configuration for consistent styling
+
+### Project Structure
+
+```
+my-plugin/
+├── plugin.json          # Plugin manifest (see Backend docs)
+├── ui/
+│   ├── src/
+│   │   ├── MyPlugin.tsx # Plugin entry point (default export)
+│   │   ├── pages/
+│   │   ├── components/
+│   │   └── ...
+│   ├── package.json
+│   ├── vite.config.ts
+│   ├── tsconfig.json
+│   └── dist/            # Built output
+└── src/                 # Backend PHP code (optional)
+```
+
+### Plugin Entry Point
+
+The entry point must export a class as the **default export** that implements the `BasePlugin` interface from the SDK:
+
+```tsx
+// ui/src/MyPlugin.tsx
+import { type BasePlugin, type PluginContext } from '@personal-ari/plugin-sdk'
+
+export default class MyPlugin implements BasePlugin {
+  name = 'my-plugin'
+
+  register(context: PluginContext): void {
+    const { routeRegistry, sidebarRegistry, i18n } = context
+
+    // Register translations
+    i18n.addResourceBundle('en', 'translation', {
+      myPlugin: { title: 'My Plugin' },
+    }, true, true)
+
+    // Register routes
+    routeRegistry.register('dashboard', {
+      path: '/my-plugin',
+      element: <MyPluginPage />,
+    })
+
+    // Register sidebar item
+    sidebarRegistry.register({
+      id: 'my-plugin',
+      component: ({ onNavigate }) => (
+        <SidebarNavItem
+          to="/my-plugin"
+          label="My Plugin"
+          onClick={onNavigate}
+        />
+      ),
+      order: 60,
+    })
+  }
+}
+```
+
+### Vite Configuration
+
+Use the SDK's build helper to create your Vite config:
+
+```ts
+// ui/vite.config.ts
+import { createViteConfig } from '@personal-ari/plugin-sdk/build/vite'
+
+export default createViteConfig({
+  pluginName: 'my-plugin',
+  entry: 'src/MyPlugin.tsx',
+})
+```
+
+This configures the build to output an ES module bundle with shared dependencies (React, react-router-dom, etc.) externalized — they are resolved at runtime via the host application's import map.
+
+### Test Configuration
+
+Use the SDK's test helper:
+
+```ts
+// ui/vitest.config.ts
+import { createTestConfig } from '@personal-ari/plugin-sdk/build/test'
+
+export default createTestConfig(import.meta.url)
+```
+
+### Building
+
+```bash
+cd ui
+npm run build
+```
+
+The built output goes to `ui/dist/` and is served by the backend's `PluginAssetController` at `/plugins/{pluginName}/{fileName}`.
+
+### Connecting to Ari
+
+1. **Create a symlink** from `core/plugins/` to your plugin root:
+   ```bash
+   cd ari/core/plugins
+   ln -s /absolute/path/to/my-plugin MyPlugin
+   ```
+
+2. **Mount in Docker** via `compose.override.yaml`:
+   ```yaml
+   services:
+     app:
+       volumes:
+         - ../my-plugin:/my-plugin
+   ```
+
+3. **Restart Docker** to pick up the new volume mount:
+   ```bash
+   docker compose up -d
+   ```
+
+The backend will discover the plugin via `plugin.json`, expose it through `GET /api/plugins`, and the frontend `PluginLoader` will load it at startup.
+
+For full backend setup details (plugin.json manifest, entities, migrations), see [Creating Plugins (Backend)](../core/creating-plugins.md#external-plugin-setup).

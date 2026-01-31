@@ -201,3 +201,126 @@ Run your tests:
 ```bash
 make test
 ```
+
+## External Plugin Setup
+
+External plugins live outside the main repository in their own project folder. This section covers how to connect an external plugin to the Ari development environment.
+
+### Project Structure
+
+A typical external plugin repository looks like this:
+
+```
+ari-plugin-gifts/
+├── plugin.json              # Plugin manifest (required)
+├── src/                     # Backend PHP code (Symfony Bundle)
+│   ├── GiftPlugin.php
+│   ├── DependencyInjection/
+│   ├── Entity/
+│   └── ...
+├── config/
+├── migrations/
+├── tests/
+└── ui/                      # Frontend code
+    ├── src/
+    ├── dist/                # Built frontend assets
+    ├── package.json
+    ├── vite.config.ts
+    └── tsconfig.json
+```
+
+### Plugin Manifest (`plugin.json`)
+
+Every external plugin must include a `plugin.json` file at the project root. This file is read by `PluginListProvider` to discover and serve the plugin.
+
+```json
+{
+  "name": "gift-plugin",
+  "version": "1.0.0",
+  "displayName": "Gift Management",
+  "description": "Manage gift ideas for contacts",
+  "author": "Ari Team",
+  "frontend": {
+    "enabled": true,
+    "entry": "ui/dist/gift-plugin.js",
+    "devUrl": null
+  },
+  "backend": {
+    "enabled": true,
+    "bundle": "Plugins\\GiftPlugin\\GiftPlugin"
+  },
+  "require": {
+    "ari/core": "^0.1.0"
+  }
+}
+```
+
+Key fields:
+- **`frontend.enabled`**: Set to `true` if the plugin has a UI component.
+- **`frontend.entry`**: Path to the built JS bundle, relative to the plugin root.
+- **`frontend.devUrl`**: Optional URL for development (e.g., a Vite dev server). Set to `null` for production builds.
+- **`backend.enabled`**: Set to `true` if the plugin has a Symfony Bundle.
+- **`require.ari/core`**: Semver constraint for Core compatibility.
+
+### Symlink into `core/plugins/`
+
+The backend auto-discovers plugins from the `core/plugins/` directory. Create a symlink to your external plugin:
+
+```bash
+cd ari/core/plugins
+ln -s /path/to/ari-plugin-gifts GiftPlugin
+```
+
+The symlink name must match the Bundle class name (e.g., `GiftPlugin` for `Plugins\GiftPlugin\GiftPlugin`).
+
+### Docker Volume Mounts
+
+In Docker, symlinks point to host paths that don't exist inside the container. You must mount the external plugin directory into the container using `compose.override.yaml`:
+
+```bash
+cd ari
+cp compose.override.yaml.dist compose.override.yaml
+```
+
+Edit `compose.override.yaml`:
+
+```yaml
+services:
+  app:
+    volumes:
+      - ../ari-plugin-gifts:/ari-plugin-gifts
+```
+
+The mount path must match the symlink target. If the symlink points to `/ari-plugin-gifts` inside the container, mount it there.
+
+> **Note:** `compose.override.yaml` is gitignored and auto-merged by Docker Compose. See [Docker Development](./index.md#docker-development) for details.
+
+### Asset Serving
+
+The `PluginAssetController` serves plugin frontend assets at:
+
+```
+GET /plugins/{pluginName}/{fileName}
+```
+
+For example, `GET /plugins/gift-plugin/gift-plugin.js` serves the built JS bundle from `{pluginPath}/ui/dist/gift-plugin.js`.
+
+Allowed file extensions: `.js`, `.css`, `.map`, `.woff`, `.woff2`, `.ttf`, `.eot`.
+
+### Plugin Discovery API
+
+The `GET /api/plugins` endpoint returns a list of enabled plugins with their metadata and asset URLs. The frontend `PluginLoader` calls this endpoint at startup to discover and load remote plugins.
+
+Example response:
+
+```json
+[
+  {
+    "id": "gift-plugin",
+    "version": "1.0.0",
+    "displayName": "Gift Management",
+    "enabled": true,
+    "url": "/plugins/gift-plugin/gift-plugin.js"
+  }
+]
+```
