@@ -31,7 +31,7 @@ You can toggle whether thumbnails (150x150) are stored in the database (as BLOB)
 **Response:** Returns the `Contact` entity with the updated `avatar` relation.
 
 ## Implementation Details
-- **Entity:** `App\Entity\ContactAvatar`
-- **Service:** `App\Service\AvatarManager`
-- **Controller:** `App\Controller\AvatarUploadAction`
+- **Entity:** `Ari\Entity\ContactAvatar`
+- **Service:** `Ari\Service\AvatarManager`
+- **Controller:** `Ari\Controller\AvatarUploadAction`
 - **Storage Adapter:** `avatar.storage` (Flysystem)

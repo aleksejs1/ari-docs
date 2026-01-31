@@ -17,8 +17,8 @@ To ensure tests are fast, reliable, and do not interfere with development data, 
 
 ### SQLite Compatibility
 Since the project supports both MySQL (production) and SQLite (testing), specific architectural patterns are used:
-1. **Custom DQL Functions**: `MONTH()` and `DAY()` functions are implemented in `App\Doctrine\DQL` to bridge the syntax gap between MySQL and SQLite.
-2. **Foreign Key Enforcement**: SQLite requires `PRAGMA foreign_keys = ON` to be set on every connection. This is enforced via `App\Doctrine\DBAL\SqliteForeignKeyMiddleware` to ensure it happens at the lowest level, before any test transactions start.
+1. **Custom DQL Functions**: `MONTH()` and `DAY()` functions are implemented in `Ari\Doctrine\DQL` to bridge the syntax gap between MySQL and SQLite.
+2. **Foreign Key Enforcement**: SQLite requires `PRAGMA foreign_keys = ON` to be set on every connection. This is enforced via `Ari\Doctrine\DBAL\SqliteForeignKeyMiddleware` to ensure it happens at the lowest level, before any test transactions start.
 
 ## Makefile QA Suite
 

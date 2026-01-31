@@ -45,9 +45,9 @@ core/
 
 ### 1. Multi-Tenancy
 The application is designed to be multi-tenant, where data is isolated per "Tenant" (User).
-- **Interface**: `App\Security\TenantAwareInterface` guarantees a `getTenant()` method.
-- **Trait**: `App\Security\TenantAwareTrait` implements the interface and ensures `onDelete: CASCADE` at the database level for the `tenant_id` foreign key. This guarantees that deleting a user automatically cleans up all their associated multi-tenant data.
-- **Enforcement**: `App\Doctrine\Filter\TenantFilter` is a Doctrine SQLFilter that automatically appends `AND tenant_id = <current_user_id>` to SQL queries. This ensures users cannot accidentally access other users' data.
+- **Interface**: `Ari\Security\TenantAwareInterface` guarantees a `getTenant()` method.
+- **Trait**: `Ari\Security\TenantAwareTrait` implements the interface and ensures `onDelete: CASCADE` at the database level for the `tenant_id` foreign key. This guarantees that deleting a user automatically cleans up all their associated multi-tenant data.
+- **Enforcement**: `Ari\Doctrine\Filter\TenantFilter` is a Doctrine SQLFilter that automatically appends `AND tenant_id = <current_user_id>` to SQL queries. This ensures users cannot accidentally access other users' data.
 - **Bypass**: The filter can be disabled for administrative tasks or internal commands.
 
 ### 2. Security & ACL
@@ -72,7 +72,7 @@ Security is handled at the object level using Symfony Voters.
 - **User Creation**: `POST /api/users` uses `UserInitialSetupProcessor` to automatically generate default notification channels ("web") and policies ("Default") for new users.
 
 ### 4. Audit Logging
-Changes to critical entities are tracked via `App\EventSubscriber\AuditLogSubscriber`.
+Changes to critical entities are tracked via `Ari\EventSubscriber\AuditLogSubscriber`.
 - **Mechanism**: Listens to Doctrine `onFlush` and `postPersist` events.
 - **Storage**: Stores changes as JSON snapshots (`snapshotBefore`, `snapshotAfter`) and change sets in the `AuditLog` entity.
 - **Scope**: Automatically audits any entity implementing `TenantAwareInterface` (unless explicitly excluded).
@@ -84,7 +84,7 @@ Entities: `NotificationRule`, `NotificationQueue`, `NotificationPolicy`, `Notifi
 - **Queue**: Pending notifications are stored in `NotificationQueue`.
 - **Delivery**: Processed by services implementing `NotificationSenderInterface` (e.g., `ActivityFeedSender`, `TelegramSender`), utilizing Symfony's `AsTaggedItem` for channel-specific logic.
 - **Webhook**: `POST /webhook/telegram` receives updates from Telegram. It processes `/start {userId}_{channelId}` commands to link a Telegram chat to a `NotificationChannel` by updating its `chatId` in the configuration. This bypasses the multi-tenancy filter to find the channel by ID and then manually verifies ownership.
-- **Cleanup**: `App\EventListener\NotificationRuleListener` ensures pending queue items are canceled when a rule is deleted.
+- **Cleanup**: `Ari\EventListener\NotificationRuleListener` ensures pending queue items are canceled when a rule is deleted.
 
 ### 6. User Preferences
 Entity: `UserPref`.
@@ -103,10 +103,10 @@ Location: `src/Service/Google/`.
 - **OAuth Scope**: Uses `https://www.googleapis.com/auth/contacts` for read/write access.
 
 ### 8. Demo Account Generation
-- **Service**: `App\Service\Demo\DemoAccountService` generates a pre-populated user with 70 contacts and complex relationships (families, colleagues).
+- **Service**: `Ari\Service\Demo\DemoAccountService` generates a pre-populated user with 70 contacts and complex relationships (families, colleagues).
 - **Command**: `bin/console app:generate-demo-account` triggers generation via CLI.
 - **API**: `POST /api/demo-account` allows triggering via the web client (returns the username).
-- **Data Generator**: `App\Service\Demo\DemoDataGenerator` provides realistic localized data without external dependencies.
+- **Data Generator**: `Ari\Service\Demo\DemoDataGenerator` provides realistic localized data without external dependencies.
 
 ### 9. Code Quality & Standards
 The project enforces strict code quality:

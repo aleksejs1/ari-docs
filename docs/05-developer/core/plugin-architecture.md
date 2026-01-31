@@ -49,10 +49,10 @@ The plugin's Extension class (e.g., `GiftPluginExtension`) implements `PrependEx
 
 Plugins fully inherit the Core's security architecture.
 
-- **Multi-Tenancy**: Entities MUST implement `App\Security\TenantAwareInterface` and use `App\Security\TenantAwareTrait`.
+- **Multi-Tenancy**: Entities MUST implement `Ari\Security\TenantAwareInterface` and use `Ari\Security\TenantAwareTrait`.
     - This ensures `tenant_id` is present and CASCADE delete is configured.
     - The global `TenantFilter` automatically applies to plugin entities, preventing cross-tenant data access.
-- **Automatic Assignment**: API Resources should use `processor: \App\State\UserOwnerProcessor::class` to automatically assign the current user as the tenant upon creation.
+- **Automatic Assignment**: API Resources should use `processor: \Ari\State\UserOwnerProcessor::class` to automatically assign the current user as the tenant upon creation.
 
 For more details, see [Core Architecture](./architecture.md#1-multi-tenancy).
 

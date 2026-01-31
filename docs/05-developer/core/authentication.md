@@ -30,9 +30,9 @@ You can view your active sessions in "Security" settings.
 
 ### Multi-Tenancy
 Refresh Tokens are strictly scoped to the `Tenant` (User).
-- **Storage**: Custom `App\Entity\RefreshToken` entity.
-- **Isolation**: Implements `App\Security\TenantAwareInterface`. The `TenantFilter` automatically ensures users can only see and manage their own tokens.
-- **Audit**: Tokens include `ipAddress` and `userAgent` captured at login (via `App\EventListener\RefreshTokenListener`).
+- **Storage**: Custom `Ari\Entity\RefreshToken` entity.
+- **Isolation**: Implements `Ari\Security\TenantAwareInterface`. The `TenantFilter` automatically ensures users can only see and manage their own tokens.
+- **Audit**: Tokens include `ipAddress` and `userAgent` captured at login (via `Ari\EventListener\RefreshTokenListener`).
 
 ### API Endpoints
 - `POST /api/token/refresh`: Exchange a refresh token for a new JWT.
