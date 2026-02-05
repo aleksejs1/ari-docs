@@ -24,10 +24,10 @@ Run the following command in your terminal.
 
 ```bash
 # For NAS / Docker Hub setup:
-docker exec -it ari php bin/console app:generate-demo-account
+docker exec -it ari php bin/console ari:demo-account:generate
 
 # For Source / Dev setup:
-# docker exec -it ari-prod-app php bin/console app:generate-demo-account
+# docker exec -it ari-prod-app php bin/console ari:demo-account:generate
 ```
 
 **Output Example:**

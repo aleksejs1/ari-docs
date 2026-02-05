@@ -104,7 +104,7 @@ Location: `src/Service/Google/`.
 
 ### 8. Demo Account Generation
 - **Service**: `Ari\Service\Demo\DemoAccountService` generates a pre-populated user with 70 contacts and complex relationships (families, colleagues).
-- **Command**: `bin/console app:generate-demo-account` triggers generation via CLI.
+- **Command**: `bin/console ari:demo-account:generate` triggers generation via CLI.
 - **API**: `POST /api/demo-account` allows triggering via the web client (returns the username).
 - **Data Generator**: `Ari\Service\Demo\DemoDataGenerator` provides realistic localized data without external dependencies.
 
