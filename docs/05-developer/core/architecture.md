@@ -88,9 +88,10 @@ Entities: `NotificationRule`, `NotificationQueue`, `NotificationPolicy`, `Notifi
 
 ### 6. User Preferences
 Entity: `UserPref`.
-- **Mechanism**: Stores user-specific settings (e.g., language, date format, time format, sync preferences).
+- **Mechanism**: Stores user-specific settings (e.g., language, date format, time format, sync preferences, dashboard settings).
 - **Validation**: Enforced via `#[Assert\Callback]` in the entity to ensure values matches the preference type.
 - **API**: Exposed via custom `UserPrefStateProvider` and `UserPrefProcessor` to allow access by preference `type` instead of ID.
+- **Dashboard Settings**: The `dashboard_settings` type stores a JSON blob containing the user's dashboard customization (layout preset, widget zone assignments, hidden widgets). Empty JSON `{}` means "use system defaults".
 
 ### 7. Google Contacts Integration
 Location: `src/Service/Google/`.

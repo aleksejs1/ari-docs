@@ -19,6 +19,7 @@ The application is built around several singleton Registries that allow plugins 
 -   **`SidebarRegistry`**: For main navigation.
 -   **`UserMenuRegistry`**: For top-right profile menu.
 -   **`WidgetRegistry`**: For dashboard widgets.
+-   **`LayoutPresetRegistry`**: For dashboard layout presets.
 -   **`ContactDetailsRegistry`**: For extending the contact profile.
 -   **`ContactFormRegistry`**: For extending the contact edit form.
 
@@ -64,7 +65,7 @@ src/
   - **JWT Refresh**: Implemented via Axios interceptors. On 401 Unauthorized, the client attempts to refresh the access token using a stored `refresh_token`. Concurrent requests are queued during refresh to prevent race conditions. If refresh fails, the user is logged out.
   - **Session Management**: Users can view active sessions (device, IP, time) via the Sessions page and terminate individual sessions remotely.
   - **State**: `AuthContext` manages global auth state (user, token, refresh_token).
-- **User Preferences**: Global preferences (language, date format, google sync, dashboard notification policy) are managed via `useUserPrefs` hook and persisted to backend.
+- **User Preferences**: Global preferences (language, date format, google sync, dashboard notification policy, dashboard settings) are managed via `useUserPrefs` hook and persisted to backend.
 - **Settings System**: Implements a **Dynamic Registry** pattern (`SettingsRegistry`). Features and plugins can register their own settings tabs (`SettingTab`) independently. The Settings page acts as a shell that renders these registered tabs. Core settings are migrated to `GeneralSettingsTab`.
 - **Notification Channels**: Support for multiple types (Telegram, Web). Telegram required config (token, ID), Web is config-less.
 - **Validation**: All forms use Zod schemas defined in `src/types/models.ts` or co-located with forms ensures type safety between API and UI.
@@ -75,7 +76,7 @@ src/
 - **Contact Graph**: Visualizes connections between contacts using a 2D force-directed graph. Accessible via the "Graph" navigation item. Implemented using `vis-network` in `src/features/contact-graph` and lazily loaded to optimize bundle size.
 - **User Menu**: Quick access to system utilities (Audit Logs, Settings) and user profile actions via the top-right header menu.
 - **Logo Navigation**: Clicking the application logo in the sidebar redirects to the Dashboard/Home page.
-- **Dashboard**: A dynamic widget system (`DynamicDashboard`) that displays key information using interchangeable widgets registered in `WidgetRegistry`. Includes widgets for **System Stats** (total contacts, logs, notifications), **Groups**, **Upcoming Anniversaries**, and **Recent Activity**.
+- **Dashboard**: A fully customizable widget system (`DynamicDashboard`) that displays key information using interchangeable widgets registered in `WidgetRegistry`. Users can toggle widgets on/off, reorder them via drag-and-drop (`@dnd-kit`), move widgets between layout zones, and switch between preset layouts (Single Column, Two Columns, Three Columns, Sidebar Right). Dashboard state is persisted in `UserPref` as a JSON blob via `useDashboardSettings`. Layout presets are managed by `LayoutPresetRegistry` and can be extended by plugins. Includes built-in widgets: **System Stats**, **Groups**, **Upcoming Anniversaries**, **Recent Logins**, and **Recent Activity**.
 - **Contact Details**: Uses a **Plugin-first Architecture** controlled via `ContactDetailsRegistry`. Individual sections (cards) are registered as independent "Smart Sections" that handle their own data mutations.
 - **Contact Form**: Uses a **Registry-based Architecture** (`ContactFormRegistry`) to dynamically render form fields. Sections are `react-hook-form` aware components that register their own fields.
 - **User Menu**: Employs a **Plugin-first Architecture** through `UserMenuRegistry`, allowing dynamic registration of menu sections (Identity, Navigation, Theme, Logout) that encapsulate their own UI and logic.

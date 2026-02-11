@@ -118,7 +118,7 @@ userMenuRegistry.register({
 
 ## 5. Add Dashboard Widgets
 
-Use `WidgetRegistry` to add cards to the home dashboard.
+Use `WidgetRegistry` to add cards to the home dashboard. Widgets automatically appear in the user's Customize panel and are placed in a default zone based on their width.
 
 ```tsx
 import { widgetRegistry } from '@/lib/widgets/WidgetRegistry' // Note: exported instance
@@ -128,15 +128,36 @@ const MyWidget = lazy(() => import('./widgets/MyWidget'))
 // ... inside register()
 widgetRegistry.register({
   id: 'my-widget',
-  title: 'My Feature Stats',
+  title: 'myPlugin.widget.title',
+  description: 'myPlugin.widget.description', // Shown in the Customize panel
   component: () => (
     <Suspense fallback={<div>Loading...</div>}>
       <MyWidget />
     </Suspense>
   ),
-  defaultDimensions: { w: 6, h: 4 }, // Gridster dimensions
+  defaultDimensions: { w: 6, h: 4 }, // w determines default zone: >=12 full, >6 left, <=6 right
 })
 ```
+
+### 5b. Register Custom Layout Presets (Optional)
+
+Use `LayoutPresetRegistry` to add custom dashboard layout options:
+
+```tsx
+// ... inside register(context)
+context.layoutPresetRegistry.register({
+  id: 'my-custom-layout',
+  name: 'myPlugin.layout.name',        // Translation key
+  description: 'myPlugin.layout.desc', // Translation key
+  zones: [
+    { id: 'top', label: 'myPlugin.zone.top', basis: '100%' },
+    { id: 'bottom-left', label: 'myPlugin.zone.bottomLeft', basis: '1/2' },
+    { id: 'bottom-right', label: 'myPlugin.zone.bottomRight', basis: '1/2' },
+  ],
+})
+```
+
+Zones with `basis: '100%'` are rendered full-width. Other zones are rendered as flex columns.
 
 ## 6. Extend Contact Details
 

@@ -14,6 +14,7 @@ The core provides several **Registries**:
 -   `SidebarRegistry`: For main navigation items.
 -   `UserMenuRegistry`: For user-specific actions.
 -   `WidgetRegistry`: For dashboard widgets.
+-   `LayoutPresetRegistry`: For dashboard layout presets.
 -   `ContactDetailsRegistry`: For sections within the Contact Details page.
 
 A **Plugin** is a class that implements the `Plugin` interface and uses these registries during its `register()` phase.
@@ -57,7 +58,7 @@ The `PluginLoader` singleton manages the full lifecycle:
 3. For each plugin with a `url` field, calls `loadRemotePlugin(url)` which uses dynamic `import()`.
 4. Instantiates the plugin class (default export) and calls `register(context)`.
 
-The `context` object passed to `register()` includes all registries (`RouteRegistry`, `SidebarRegistry`, `UserMenuRegistry`, `TopMenuRegistry`, `WidgetRegistry`, `SettingsRegistry`), the `i18n` instance, and the `api` (axios) client.
+The `context` object passed to `register()` includes all registries (`RouteRegistry`, `SidebarRegistry`, `UserMenuRegistry`, `TopMenuRegistry`, `WidgetRegistry`, `LayoutPresetRegistry`, `SettingsRegistry`), the `i18n` instance, and the `api` (axios) client.
 
 ### Import Maps
 

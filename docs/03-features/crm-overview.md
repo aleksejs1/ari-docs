@@ -34,13 +34,20 @@ Your data shouldn't be trapped in a silo.
 
 ## Productivity & Dashboard
 
-The dashboard provides an at-a-glance view of your personal network health.
+The dashboard provides an at-a-glance view of your personal network health, and it is fully customizable.
 
 -   **Widgets**:
     -   **Upcoming Anniversaries**: See birthdays and events happening in the next 30 days.
+    -   **Recent Logins**: View your recent login activity.
     -   **Recent Activity**: Track the latest updates to your contacts.
     -   **Statistics**: View total contacts and system usage.
     -   **Groups**: Quick access to your top contact groups.
+-   **Customization**:
+    -   **Toggle Widgets**: Show or hide individual widgets from the Customize panel.
+    -   **Reorder**: Drag and drop widgets to arrange them in the order you prefer.
+    -   **Move Between Zones**: Drag widgets between layout zones (e.g., from the left column to the right).
+    -   **Layout Presets**: Choose from Single Column, Two Columns, Three Columns, or Sidebar Right layouts.
+    -   **Persistent**: Your dashboard configuration is saved automatically and syncs across sessions.
 
 ## Notifications
 
@@ -53,6 +60,7 @@ Stay informed on the channels you actually use.
 
 Make Ari your own.
 
+-   **Dashboard**: Fully customizable with drag-and-drop widget reordering, zone-based layouts, and multiple layout presets.
 -   **Themes**: Switch between **Dark** and **Light** modes.
 -   **Localization**: Fully translated in **English** and **Russian**.
 -   **Preferences**: Customize Date & Time formats and Privacy settings (like hiding the logo for screenshots).
