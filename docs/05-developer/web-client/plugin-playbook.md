@@ -28,7 +28,7 @@ export class MyFeaturePlugin implements Plugin {
 
 ## 2. Register Routes
 
-Use `RouteRegistry` to add pages. You typically register routes under the `dashboard` slot (for the main layout) or `sidebar-less` (for full-width pages like wizards).
+Use `RouteRegistry` to add pages. Register routes under the `main` slot (for the unified layout with collapsible sidebar) or the `settings` slot (for pages nested under `/settings/*`).
 
 **Important:** Always use `lazy` imports and `Suspense` with a loader component to ensure **Fast Refresh** works correctly and to optimize bundle size.
 
@@ -48,7 +48,7 @@ export class MyFeaturePlugin implements Plugin {
     const routeRegistry = RouteRegistry.getInstance()
 
     // 2. Register key route
-    routeRegistry.register('dashboard', {
+    routeRegistry.register('main', {
       path: '/my-feature',
       element: (
         <Suspense fallback={<PageLoader />}>
@@ -77,7 +77,7 @@ const sidebarRegistry = SidebarRegistry.getInstance()
 
 sidebarRegistry.register({
   id: 'my-feature-link',
-  component: ({ onNavigate }) => {
+  component: ({ onNavigate, collapsed }) => {
     // Hooks like useTranslation are allowed here
     const { t } = useTranslation()
     return (
@@ -86,6 +86,7 @@ sidebarRegistry.register({
         icon={Star}
         label={t('myFeature.title', 'My Feature')}
         onClick={onNavigate}
+        collapsed={collapsed}
       />
     )
   },
@@ -256,7 +257,7 @@ export default class MyPlugin implements BasePlugin {
     }, true, true)
 
     // Register routes
-    routeRegistry.register('dashboard', {
+    routeRegistry.register('main', {
       path: '/my-plugin',
       element: <MyPluginPage />,
     })
@@ -264,11 +265,12 @@ export default class MyPlugin implements BasePlugin {
     // Register sidebar item
     sidebarRegistry.register({
       id: 'my-plugin',
-      component: ({ onNavigate }) => (
+      component: ({ onNavigate, collapsed }) => (
         <SidebarNavItem
           to="/my-plugin"
           label="My Plugin"
           onClick={onNavigate}
+          collapsed={collapsed}
         />
       ),
       order: 60,

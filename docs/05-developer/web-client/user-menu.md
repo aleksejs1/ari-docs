@@ -23,7 +23,7 @@ A "Section" is a React component that renders a group of menu items or a label.
 **Path:** `src/features/ui/usermenu/sections/`
 
 ### 3. Bootstrapping
-Default sections are registered in `defaults_usermenu.ts`.
+Default sections are registered in `defaults_usermenu.ts`. The default sections include user identity, theme switcher, and logout.
 
 **Path:** `src/features/ui/defaults_usermenu.ts`
 

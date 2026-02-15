@@ -15,8 +15,8 @@ The application follows a **Plugin-Oriented Architecture**. The core framework p
 
 ### Registry System
 The application is built around several singleton Registries that allow plugins to inject content:
--   **`RouteRegistry`**: For defining pages and routing.
--   **`SidebarRegistry`**: For main navigation.
+-   **`RouteRegistry`**: For defining pages and routing (slots: `main`, `settings`, `public`).
+-   **`SidebarRegistry`**: For main navigation items in the collapsible sidebar.
 -   **`UserMenuRegistry`**: For top-right profile menu.
 -   **`WidgetRegistry`**: For dashboard widgets.
 -   **`LayoutPresetRegistry`**: For dashboard layout presets.
@@ -66,7 +66,7 @@ src/
   - **Session Management**: Users can view active sessions (device, IP, time) via the Sessions page and terminate individual sessions remotely.
   - **State**: `AuthContext` manages global auth state (user, token, refresh_token).
 - **User Preferences**: Global preferences (language, date format, google sync, dashboard notification policy, dashboard settings) are managed via `useUserPrefs` hook and persisted to backend.
-- **Settings System**: Implements a **Dynamic Registry** pattern (`SettingsRegistry`). Features and plugins can register their own settings tabs (`SettingTab`) independently. The Settings page acts as a shell that renders these registered tabs. Core settings are migrated to `GeneralSettingsTab`.
+- **Settings System**: Settings pages are organized under `/settings/*` with a secondary sidebar (`SettingsLayout`) for navigation. Core settings (General, Regional, Data, Plugins) and administrative pages (Sessions, Audit Logs, Password, etc.) each have their own URL. The `SettingsRegistry` manages settings tab content using a fluent `Setting` builder API. Plugins register settings routes in the `'settings'` route slot.
 - **Notification Channels**: Support for multiple types (Telegram, Web). Telegram required config (token, ID), Web is config-less.
 - **Validation**: All forms use Zod schemas defined in `src/types/models.ts` or co-located with forms ensures type safety between API and UI.
 - **Favorites**: Contact favorites are managed via a special group (default `favourites`, configurable in User Settings).
@@ -74,17 +74,16 @@ src/
 - **Data Import**: Users can import contacts from an XML file via the Settings page. This is handled by the `useImportContacts` hook which sends the file to the backend.
 - **Global Search**: A unified search bar in the header allows searching for Contacts (API), Groups (local), and Navigation/Settings (static), organized in tabs (Contacts, Groups, Settings). Implemented in `src/features/search/components/GlobalSearch.tsx`. Displays top 5 results with a "Show all results" option for contacts.
 - **Contact Graph**: Visualizes connections between contacts using a 2D force-directed graph. Accessible via the "Graph" navigation item. Implemented using `vis-network` in `src/features/contact-graph` and lazily loaded to optimize bundle size.
-- **User Menu**: Quick access to system utilities (Audit Logs, Settings) and user profile actions via the top-right header menu.
+- **User Menu**: Quick access to user profile actions (theme, logout) via the top-right header dropdown.
 - **Logo Navigation**: Clicking the application logo in the sidebar redirects to the Dashboard/Home page.
 - **Dashboard**: A fully customizable widget system (`DynamicDashboard`) that displays key information using interchangeable widgets registered in `WidgetRegistry`. Users can toggle widgets on/off, reorder them via drag-and-drop (`@dnd-kit`), move widgets between layout zones, and switch between preset layouts (Single Column, Two Columns, Three Columns, Sidebar Right). Dashboard state is persisted in `UserPref` as a JSON blob via `useDashboardSettings`. Layout presets are managed by `LayoutPresetRegistry` and can be extended by plugins. Includes built-in widgets: **System Stats**, **Groups**, **Upcoming Anniversaries**, **Recent Logins**, and **Recent Activity**.
 - **Contact Details**: Uses a **Plugin-first Architecture** controlled via `ContactDetailsRegistry`. Individual sections (cards) are registered as independent "Smart Sections" that handle their own data mutations.
 - **Contact Form**: Uses a **Registry-based Architecture** (`ContactFormRegistry`) to dynamically render form fields. Sections are `react-hook-form` aware components that register their own fields.
-- **User Menu**: Employs a **Plugin-first Architecture** through `UserMenuRegistry`, allowing dynamic registration of menu sections (Identity, Navigation, Theme, Logout) that encapsulate their own UI and logic.
-- **Sidebar**: Uses a **Registry-based Plugin Architecture** (`SidebarRegistry`) for navigation content. Sections and items are registered independently, allowing features to contribute to navigation without modifying the core layout.
+- **User Menu**: Employs a **Plugin-first Architecture** through `UserMenuRegistry`, allowing dynamic registration of menu sections (Identity, Theme, Logout) that encapsulate their own UI and logic.
+- **Sidebar**: Uses a **Registry-based Plugin Architecture** (`SidebarRegistry`) for navigation content. The sidebar supports a **collapsible mode** (expanded ~256px, collapsed ~64px with icon-only tooltips). Sections receive `onNavigate` and `collapsed` props. The Groups section features a collapsible sub-list showing individual groups with contact counts.
 - **Form Layout**: Contact creation/editing uses a `ContactModalForm` (Dialog) with a streamlined, Google Contacts-inspired layout (single column, icons). Other large forms may use `CollapsibleSection` to group fields.
-- **Layouts**: The application uses two main layouts: `DashboardLayout` (with sidebar) for most pages and `SidebarLessLayout` (no sidebar, simplified) for the Home and Contacts pages.
-- **Sidebar**: In `DashboardLayout`, the sidebar provides navigation to secondary features (Audit Logs, Groups, Settings etc). On desktop it is always visible; on mobile it is hidden and accessible via a hamburger menu (using the `Sheet` component). It does not contain Home or Contacts links, nor user/session controls (which are in the header).
-- **Header Navigation**: In `SidebarLessLayout`, primary navigation (like Contacts) is exposed directly in the header row next to the logo.
+- **Layout**: The application uses a single unified `AppLayout` with a collapsible sidebar for all authenticated pages. The sidebar provides navigation to all features (Home, Contacts, Groups, Contact Graph, Settings, and plugin items). On desktop it is always visible; on mobile it is hidden and accessible via a hamburger menu (using the `Sheet` component). The collapse state is persisted in `localStorage`.
+- **Settings Layout**: Settings pages use a secondary sidebar (`SettingsLayout`) with grouped navigation (Preferences, Notifications, Activity, Account). Each settings page has its own URL under `/settings/*`.
 - **Type Autocomplete**: Form fields for "type" (phone type, email type, etc.) use a `TypeAutocomplete` component that provides suggestions from the `/api/autocomplete` endpoint via the `useAutocomplete` hook. Users can also enter custom values, which are cached locally for future use within the session.
 - **Avatar Upload**: Avatar management uses a dedicated component `AvatarUpload` which handles image selection and immediate upload via `POST /api/contacts/{id}/avatar`. Support for drag-and-drop or simple file selection with validation.
 - **Demo Mode**: Users can instantly explore the application using a "Demo" account. This is triggered from the Login page, calling `POST /api/demo-account` to generate a temporary user and then automatically logging in with the default password `demo`.

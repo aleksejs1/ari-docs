@@ -58,7 +58,7 @@ The `PluginLoader` singleton manages the full lifecycle:
 3. For each plugin with a `url` field, calls `loadRemotePlugin(url)` which uses dynamic `import()`.
 4. Instantiates the plugin class (default export) and calls `register(context)`.
 
-The `context` object passed to `register()` includes all registries (`RouteRegistry`, `SidebarRegistry`, `UserMenuRegistry`, `TopMenuRegistry`, `WidgetRegistry`, `LayoutPresetRegistry`, `SettingsRegistry`), the `i18n` instance, and the `api` (axios) client.
+The `context` object passed to `register()` includes all registries (`RouteRegistry`, `SidebarRegistry`, `UserMenuRegistry`, `WidgetRegistry`, `LayoutPresetRegistry`, `SettingsRegistry`), the `i18n` instance, and the `api` (axios) client.
 
 ### Import Maps
 
@@ -82,15 +82,15 @@ This ensures remote plugins share the same React instance and SDK as the host ap
 ## Registration Logic
 
 ### Routing Slots
--   `dashboard`: Routes rendered inside `DashboardLayout`.
--   `sidebar-less`: Routes rendered inside `SidebarLessLayout`.
+-   `main`: Routes rendered inside `AppLayout` (the unified layout with collapsible sidebar). Legacy aliases `dashboard` and `sidebar-less` are mapped to `main` for backward compatibility.
+-   `settings`: Routes rendered inside `SettingsLayout` (nested under `/settings/*` with a secondary sidebar). Paths are relative (e.g., `'audit-logs'` renders at `/settings/audit-logs`).
 -   `public`: Routes accessible before login.
 
 ## Existing Plugins
 
 | Plugin Name | Directory | Description |
 | :--- | :--- | :--- |
-| **Audit Logs** | `src/plugins/audit-logs` | Provides the "Activity History" features, including the timeline view for contacts, the sidebar history page, and the dashboard widget. |
+| **Audit Logs** | `src/plugins/audit-logs` | Provides the "Activity History" features, including the timeline view for contacts, the settings audit logs page, and the dashboard widget. |
 | **Contacts** | `src/plugins/contacts` | Manages the Contact Details page layout and sections (General Info, Dates, Relations, etc.) via `ContactDetailsRegistry`. |
 | **Contact Graph** | `src/plugins/contact-graph` | Visualization of contact relationships. |
 | **Dashboard** | `src/plugins/dashboard` | Manages the home dashboard layout and widgets. |
@@ -98,5 +98,5 @@ This ensures remote plugins share the same React instance and SDK as the host ap
 | **Groups** | `src/plugins/groups` | Manages contact groups (creation, editing, deletion). |
 | **Notifications** | `src/plugins/notifications` | Manages notification channels and policies. |
 | **Sessions** | `src/plugins/sessions` | Manages active user sessions. |
-| **Settings** | `src/plugins/settings` | Manages the application settings page. |
+| **Settings** | `src/plugins/settings` | Manages the settings layout and pages (General, Regional, Data, Plugins). |
 | **User Security** | `src/plugins/user-security` | Manages password change and account deletion features. |

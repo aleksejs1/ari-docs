@@ -7,19 +7,45 @@ sidebar_label: Settings System
 
 ## Overview
 
-The settings system in **Ari Web Client** follows a **Plugin-First Architecture**. It consists of three main layers:
+The settings system uses a **dedicated layout with a secondary sidebar** for navigation. All settings and administrative pages are organized under `/settings/*` URLs with nested routing.
 
-1.  **Registry**: A global registry (`SettingsRegistry`) that manages available setting tabs.
-2.  **Tabs**: Individual modules (`SettingTab` subclasses) that implement specific setting pages.
-3.  **Builder API**: A **Fluent API (Builder Pattern)** used within tabs to declaratively define the UI (`Setting` class).
+## Layout
 
-This approach is heavily inspired by the [Obsidian Plugin API](https://docs.obsidian.md/Plugins/User+interface/Settings#Settings).
+### `SettingsLayout`
+-   **Location**: `src/plugins/settings/components/SettingsLayout.tsx`
+-   **Role**: Provides a secondary sidebar with grouped navigation for all settings pages.
+-   **Structure**: Uses `<Outlet />` for nested route rendering.
+-   **Mobile**: On small screens, the secondary sidebar is hidden and accessible via a `Sheet` component.
 
-## 1. Registry System
+### Navigation Groups
+
+Settings pages are organized into four groups:
+
+| Group | Pages |
+|:------|:------|
+| **Preferences** | General, Regional, Data, Plugins |
+| **Notifications** | Notification Channels, Notification Policies |
+| **Activity** | Sessions, Login History, Google Import, Audit Logs |
+| **Account** | Change Password, Delete Account |
+
+### Route Registration
+
+Settings pages are registered using the `'settings'` route slot in `RouteRegistry`. Paths are relative to `/settings/`:
+
+```tsx
+routeRegistry.register('settings', {
+  path: 'my-settings-page',  // renders at /settings/my-settings-page
+  element: <MySettingsPage />,
+})
+```
+
+The navigation items in the secondary sidebar are defined in `SettingsLayout.tsx` via the `settingsNavGroups` array.
+
+## Settings Builder System
 
 ### `SettingsRegistry`
 -   **Location**: `src/lib/settings/SettingsRegistry.ts`
--   **Role**: A singleton service that stores registered tabs.
+-   **Role**: A singleton service that stores registered settings tabs.
 -   **Reactivity**: Uses `useSyncExternalStore` (via `useSettingsTabs` hook) to push updates to the UI whenever a tab is registered or unregistered.
 
 ### `SettingTab`
@@ -30,49 +56,35 @@ This approach is heavily inspired by the [Obsidian Plugin API](https://docs.obsi
     -   `name`: Display name or translation key (e.g., `'settings.tabs.general'`).
     -   `Component`: A React component to render the tab's content.
 
-## 2. Builder System (The "Fluent API")
+### Builder API (The "Fluent API")
 
-### `Setting` (Builder)
+The settings UI is built using a chainable builder pattern inspired by the [Obsidian Plugin API](https://docs.obsidian.md/Plugins/User+interface/Settings#Settings).
+
+#### `Setting` (Builder)
 -   **Location**: `src/lib/settings/Setting.ts`
--   **Role**: Provides a chainable API to construct settings configurations.
--   **Usage**: `new Setting(container).setName(...).addControl(...)`
+-   Provides a chainable API: `new Setting(container).setName(...).addControl(...)`
 
-### `SettingItem` (Renderer)
+#### `SettingItem` (Renderer)
 -   **Location**: `src/lib/settings/components/SettingItem.tsx`
--   **Role**: A pure React component that takes a `SettingConfig` and renders the appropriate UI controls (shadcn/ui components).
+-   Renders the appropriate UI controls (shadcn/ui components) from a `SettingConfig`.
 
-## 3. Data Flow
+## Standard Settings Pages
 
-1.  **Registration**: At application startup (`main.tsx` or plugin init), `SettingTab` instances are registered with `settingsRegistry`.
-    ```typescript
-    settingsRegistry.registerTab(new GeneralSettingsTab())
-    ```
-2.  **Navigation**: `SettingsPage.tsx` subscribes to the registry and renders the sidebar list of tabs.
-3.  **Tab Rendering**: When a tab is selected, its `Component` (e.g., `GeneralSettings`) is rendered.
-4.  **Content Definition**: Inside `GeneralSettings`, `useMemo` is used to create a `settings` array using the `Setting` builder.
-5.  **Data Binding**: User interactions trigger `onChange` callbacks, which call updating functions from `useUserPrefs`.
-
-## Standard Tabs
-
-The core application provides three default tabs (located in `src/features/settings`):
--   **General**: Language, Favorites, Notifications.
--   **Regional**: Date & Time formats.
--   **Data**: Import & Export.
+The core application provides these default settings pages:
+-   **General** (`/settings/general`): Language, Favorites, Notifications.
+-   **Regional** (`/settings/regional`): Date & Time formats.
+-   **Data** (`/settings/data`): Import & Export.
+-   **Plugins** (`/settings/plugins`): Community plugin management.
 
 ---
 
-# Cookbook: Creating Settings
+## Cookbook: Creating Settings
 
-This guide provides step-by-step recipes for adding new settings to the Ari Web Client.
+### Creating a New Settings Page
 
-## 1. Creating a New Settings Tab
+#### Step 1: Create the Component
 
-To add a new section to the Settings page, you need to create a `SettingTab`.
-
-### Step A: Create the Component
-Create a component that uses the `Setting` builder to define your UI.
-
-```typescript
+```tsx
 // src/features/my-feature/MySettings.component.tsx
 import { useMemo } from 'react'
 import { Setting } from '@/lib/settings/Setting'
@@ -81,17 +93,17 @@ import { SettingItem } from '@/lib/settings/components/SettingItem'
 export function MySettings() {
   const settings = useMemo(() => {
     const container = []
-    
+
     new Setting(container)
       .setName('My Setting')
       .addText(text => text.setPlaceholder('Value...'))
-      
+
     return container
   }, [])
 
   return (
     <div className="space-y-6">
-       <div className="grid gap-6">
+      <div className="grid gap-6">
         {settings.map((s, i) => <SettingItem key={i} setting={s} />)}
       </div>
     </div>
@@ -99,17 +111,16 @@ export function MySettings() {
 }
 ```
 
-### Step B: Create the Tab Class
-Extend the `SettingTab` abstract class.
+#### Step 2: Create and Register the Tab
 
-```typescript
+```tsx
 // src/features/my-feature/MySettingsTab.ts
 import { SettingTab } from '@/lib/settings/SettingTab'
 import { MySettings } from './MySettings.component'
 
 export class MySettingsTab extends SettingTab {
   constructor() {
-    super('my-feature', 'My Feature') // ID, Display Name (or translation key)
+    super('my-feature', 'My Feature')
   }
 
   get Component() {
@@ -118,80 +129,55 @@ export class MySettingsTab extends SettingTab {
 }
 ```
 
-### Step C: Register the Tab
-Register your tab in `src/main.tsx` (or your plugin entry point).
+Register it in your plugin's `register()` method:
 
-```typescript
-import { settingsRegistry } from '@/lib/settings/SettingsRegistry'
-import { MySettingsTab } from './features/my-feature/MySettingsTab'
-
+```ts
 settingsRegistry.registerTab(new MySettingsTab())
-```
-
-## 2. Adding Settings to an Existing Tab
-
-If you want to add settings to an existing component (like `GeneralSettings`), follow usage of the **Setting Builder**.
-
-### Base Pattern
-
-```typescript
-new Setting(settings)
-  .setName(t('settings.yourSettingName'))
-  .setDesc(t('settings.yourDescription'))
-  // .addControl(...)
 ```
 
 ### Control Recipes
 
-#### Simple Text Input
-
-```typescript
+#### Text Input
+```ts
 new Setting(settings)
   .setName('API Key')
-  .addText((text) =>
-    text
-      .setValue(apiKey)
-      .onChange((val) => setApiKey(val)),
-  )
+  .addText(text => text.setValue(apiKey).onChange(val => setApiKey(val)))
 ```
 
-#### Radio Group (Toggle/Choice)
-
-```typescript
+#### Radio Group
+```ts
 new Setting(settings)
   .setName('Theme')
-  .addRadio((radio) =>
+  .addRadio(radio =>
     radio
       .addOption('light', 'Light')
       .addOption('dark', 'Dark')
       .setValue(theme)
-      .onChange((val) => setTheme(val)),
+      .onChange(val => setTheme(val))
   )
 ```
 
-#### Dropdown (Select)
-
-```typescript
+#### Dropdown
+```ts
 new Setting(settings)
   .setName('Policy')
-  .addDropdown((dropdown) => {
+  .addDropdown(dropdown =>
     dropdown
       .addOption('a', 'Policy A')
       .addOption('b', 'Policy B')
       .setValue(currentPolicy)
       .onChange(val => setPolicy(val))
-  })
+  )
 ```
 
 #### Action Button
-
-```typescript
+```ts
 new Setting(settings)
   .setName('Sync')
-  .addButton((btn) =>
+  .addButton(btn =>
     btn
       .setButtonText('Sync Now')
       .setDisabled(isSyncing)
-      .onClick(handleSync),
+      .onClick(handleSync)
   )
 ```
