@@ -203,9 +203,101 @@ test('forgot password email', async ({ userContext }) => {
 
 ---
 
-## 🚀 Step 6. Pushing Changes
+## Step 6. Working with External Service Mocks (Google, Telegram)
 
-Excellent, the test is written and passes locally (glows green in UI-mode). It's time to commit the code!
+The E2E environment includes mock servers for Google and Telegram APIs. The backend is configured via environment variables to send requests to these mocks instead of real services.
+
+### Testing Google Contacts Import
+
+The Google import flow involves OAuth, token exchange, and async message processing. Here is the pattern:
+
+```typescript
+import { test, expect } from '../fixtures/user-context.fixture'
+import { resetGoogleMock } from '../helpers/mock-google.helper'
+
+const BASE_URL = process.env.BASE_URL ?? 'http://localhost:8081'
+
+test('should import Google contacts', async ({ userContext }) => {
+    const { token, apiContext } = userContext
+    const headers = { Authorization: `Bearer ${token}` }
+
+    // 1. Reset mock state
+    await resetGoogleMock()
+
+    // 2. Start OAuth flow — get the authorization URL
+    const connectRes = await apiContext.get(`${BASE_URL}/api/connect/google`, { headers })
+    const { url } = await connectRes.json()
+
+    // 3. Extract state from the URL
+    const state = new URL(url).searchParams.get('state')
+
+    // 4. Simulate OAuth callback (the mock returns a code automatically)
+    await apiContext.get(`${BASE_URL}/api/connect/google/check?code=mock-auth-code&state=${state}`)
+
+    // 5. Trigger import
+    const importRes = await apiContext.post(`${BASE_URL}/api/google/import`, { headers, data: {} })
+    const { imported } = await importRes.json()
+    expect(imported).toBe(3)
+
+    // 6. Process async queue (each contact is imported via Messenger)
+    await apiContext.post(`${BASE_URL}/api/e2e/exec-command`, {
+        data: { command: 'messenger:consume', limit: 10 },
+    })
+
+    // 7. Verify contacts appeared (via UI or API)
+})
+```
+
+### Testing Telegram Notification Delivery
+
+The Telegram flow requires creating a channel, simulating the `/start` webhook, and verifying the mock received the message:
+
+```typescript
+import { test, expect } from '../fixtures/user-context.fixture'
+import { resetTelegramMock, waitForTelegramMessage } from '../helpers/mock-telegram.helper'
+
+const BASE_URL = process.env.BASE_URL ?? 'http://localhost:8081'
+
+test('should deliver telegram notification', async ({ userContext }) => {
+    const { token, userId, apiContext } = userContext
+    const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/ld+json' }
+
+    await resetTelegramMock()
+
+    // 1. Create a telegram channel
+    const channelRes = await apiContext.post(`${BASE_URL}/api/notification_channels`, {
+        headers,
+        data: { type: 'telegram', config: {} },
+    })
+    const { id: channelId } = await channelRes.json()
+
+    // 2. Simulate /start webhook to link chatId
+    await apiContext.post(`${BASE_URL}/api/webhook/telegram`, {
+        headers: { 'Content-Type': 'application/json' },
+        data: {
+            message: {
+                text: `/start ${userId}_${channelId}`,
+                chat: { id: 99999 },
+            },
+        },
+    })
+
+    // 3. Verify channel, create policy, generate + process notifications
+    // ...
+
+    // 4. Check mock received the message
+    const msg = await waitForTelegramMessage({ chatId: '99999', timeout: 15000 })
+    expect(msg.text).toBeTruthy()
+})
+```
+
+> **Key detail**: `userContext` now includes a numeric `userId` field, which is needed for the Telegram `/start` webhook payload (`/start {userId}_{channelId}`).
+
+---
+
+## Step 7. Pushing Changes
+
+The test is written and passes locally. It's time to commit the code.
 
 Since we changed TWO different repositories (added `data-testid` to the application and wrote tests in `ari-e2e`), we need to make two pushes. Usually, developing an auto-test is tied to a development task (you fix a feature and immediately write an auto-test for it in the neighboring repository).
 

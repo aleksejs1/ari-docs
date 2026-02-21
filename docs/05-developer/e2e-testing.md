@@ -85,4 +85,74 @@ Therefore, the primary mechanism for "hooking" automated tests is **`data-testid
 
 ---
 
+## External Service Mocking
+
+The E2E environment replaces real external APIs with lightweight Express.js mock servers. The backend reads API base URLs from environment variables, so in Docker they point to the mocks instead of production endpoints.
+
+### Configurable URLs
+
+All Google and Telegram API URLs are injected via Symfony `#[Autowire]` parameters with env-var overrides and sensible defaults:
+
+| Env Variable | Default (Production) | E2E Override |
+|---|---|---|
+| `GOOGLE_AUTH_URL` | `https://accounts.google.com/o/oauth2/v2/auth` | `http://localhost:4020/o/oauth2/v2/auth` |
+| `GOOGLE_TOKEN_URL` | `https://oauth2.googleapis.com/token` | `http://mock-google:4010/token` |
+| `GOOGLE_PEOPLE_API_URL` | `https://people.googleapis.com/v1/people/me/connections` | `http://mock-google:4010/v1/people/me/connections` |
+| `GOOGLE_GROUPS_API_URL` | `https://people.googleapis.com/v1/contactGroups` | `http://mock-google:4010/v1/contactGroups` |
+| `GOOGLE_PEOPLE_API_BASE_URL` | `https://people.googleapis.com/v1/` | `http://mock-google:4010/v1/` |
+| `TELEGRAM_API_BASE_URL` | `https://api.telegram.org` | `http://mock-telegram:4011` |
+
+> **Note:** `GOOGLE_AUTH_URL` uses `localhost` (not Docker DNS) because the browser performs the OAuth redirect on the host machine. All other URLs use Docker-internal hostnames for server-to-server communication.
+
+### Mock Google (port 4020)
+
+Implements the full OAuth flow and People/Contact Groups APIs:
+- `GET /o/oauth2/v2/auth` — OAuth authorization redirect (returns `code` + `state`)
+- `POST /token` — Token exchange (returns mock access/refresh tokens)
+- `GET /v1/people/me/connections` — List contacts (returns 3 mock contacts)
+- `GET /v1/people/:resourceName` — Get single contact details
+- `GET /v1/contactGroups` — List contact groups
+
+Admin endpoints for test assertions:
+- `GET /__admin/calls` — returns all API calls made to the mock
+- `POST /__admin/reset` — clears the call log
+
+### Mock Telegram (port 4021)
+
+Implements Telegram Bot API endpoints:
+- `POST /bot:token/sendMessage` — Captures sent messages
+- `GET /bot:token/getMe` — Returns mock bot info
+- `POST /bot:token/setWebhook` — Accepts webhook registration
+
+Admin endpoints:
+- `GET /__admin/messages` — returns all captured messages (chatId, text, timestamp)
+- `POST /__admin/reset` — clears the message log
+
+### Test Helpers
+
+Dedicated helper modules wrap mock admin APIs for use in tests:
+
+- **`tests/helpers/mock-google.helper.ts`** — `resetGoogleMock()`, `getGoogleCalls()`
+- **`tests/helpers/mock-telegram.helper.ts`** — `resetTelegramMock()`, `getTelegramMessages()`, `waitForTelegramMessage()`
+- **`tests/helpers/mailpit.helper.ts`** — `clearMessages()`, `getMessages()`, `waitForMessage()`
+
+---
+
+## Test Coverage Summary
+
+| Phase | Area | Spec Files | Tags |
+|---|---|---|---|
+| 1 | Auth (login, register, logout) | `tests/auth/*.spec.ts` | `@smoke`, `@critical` |
+| 2 | Contacts CRUD, search, details, tenant isolation | `tests/contacts/*.spec.ts` | `@crud`, `@critical` |
+| 2 | Groups CRUD, filtering | `tests/groups/*.spec.ts` | `@crud` |
+| 2 | Dashboard widgets | `tests/dashboard/*.spec.ts` | |
+| 2 | Export (CSV, vCard) | `tests/export/*.spec.ts` | |
+| 2 | Sessions, audit logs | `tests/settings/*.spec.ts` | |
+| 3 | Notification channels/policies CRUD | `tests/notifications/channels-crud.spec.ts`, `policies-crud.spec.ts` | `@notifications`, `@crud` |
+| 3 | Email notification delivery | `tests/notifications/delivery.spec.ts` | `@notifications`, `@delivery` |
+| 4 | Google OAuth + contacts import | `tests/google-import/google-import.spec.ts` | `@google`, `@slow` |
+| 4 | Telegram notification delivery | `tests/notifications/telegram-delivery.spec.ts` | `@notifications`, `@telegram` |
+
+---
+
 > For detailed instructions on how to run tests locally and how to write a new test, read the document [Cookbook: Writing E2E Tests](./e2e-cookbook.md).
