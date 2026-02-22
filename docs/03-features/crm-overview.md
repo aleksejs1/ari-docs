@@ -70,4 +70,5 @@ Make Ari your own.
 Built for privacy and control.
 
 -   **Audit Logs**: Every change is tracked. View a complete history of *who* changed *what* and *when*, with detailed before/after snapshots.
+-   **Point-in-Time Snapshots**: Click any event in a contact's timeline to see the complete state of the contact at that moment — including all names, phones, emails, dates, and other details as they were at the time.
 -   **Session Control**: View and revoke active sessions from any device.

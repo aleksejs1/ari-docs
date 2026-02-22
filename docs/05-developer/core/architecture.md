@@ -74,8 +74,13 @@ Security is handled at the object level using Symfony Voters.
 ### 4. Audit Logging
 Changes to critical entities are tracked via `Ari\EventSubscriber\AuditLogSubscriber`.
 - **Mechanism**: Listens to Doctrine `onFlush` and `postPersist` events.
-- **Storage**: Stores changes as JSON snapshots (`snapshotBefore`, `snapshotAfter`) and change sets in the `AuditLog` entity.
+- **Storage**: Stores changes as JSON snapshots (`snapshotBefore`, `snapshotAfter`) and change sets in the `AuditLog` entity. For UPDATE operations, `snapshotAfter` contains the full entity state after the change.
 - **Scope**: Automatically audits any entity implementing `TenantAwareInterface` (unless explicitly excluded).
+
+#### Contact Point-in-Time Snapshots
+- **API**: `GET /api/contacts/{contactId}/snapshot/{logId}` returns the aggregated contact state at the specified audit log entry.
+- **Service**: `ContactSnapshotService` uses a forward-replay algorithm — fetches all timeline logs up to the target log ID and sequentially applies INSERT/UPDATE/REMOVE operations.
+- **Backward Compatibility**: Supports old-format UPDATE logs (with `changes` only) and new-format logs (with full `snapshotAfter`).
 
 ### 5. Notification System
 Entities: `NotificationRule`, `NotificationQueue`, `NotificationPolicy`, `NotificationChannel`.
