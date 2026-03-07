@@ -62,6 +62,22 @@ const config = {
   ],
 
   plugins: [
+    // Suppress the "Critical dependency: require function is used in a way in which dependencies
+    // cannot be statically extracted" warning from vscode-languageserver-types (a transitive dep
+    // of mermaid → @mermaid-js/parser → langium). The warning is harmless — the module works at
+    // runtime — but cannot be fixed upstream.
+    function suppressMermaidWebpackWarning() {
+      return {
+        name: 'suppress-mermaid-webpack-warning',
+        configureWebpack() {
+          return {
+            ignoreWarnings: [
+              { module: /vscode-languageserver-types/, message: /Critical dependency/ },
+            ],
+          };
+        },
+      };
+    },
     [
       'docusaurus-plugin-openapi-docs',
       {
