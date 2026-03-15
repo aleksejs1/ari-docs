@@ -19,7 +19,28 @@ At the heart of Ari is a powerful contact management system that goes far beyond
 
 ### Visualization
 -   **Contact Graph**: Visualize your network with an interactive force-directed graph showing connections between people.
--   **Customizable Tables**: Toggle columns, sort, and filter the contact list to show exactly what you need.
+-   **Customizable Tables**: Toggle columns, reorder them, and sort the contact list to show exactly what you need.
+
+### Column Variants
+
+Beyond the standard columns, you can add **type-scoped columns** to surface specific sub-fields directly in the table.
+
+Click the **column variants button** (grid icon) in the contacts toolbar to open the Display Settings panel:
+
+-   **Names** — Add a column for each name locale (e.g. "Name in ru", "Name in en"), useful when contacts have transliterated or multilingual names.
+-   **Phone numbers** — Add a column per phone type (mobile, work, home) to compare numbers side by side.
+-   **Email addresses** — Add a column per email type (personal, work) for the same effect.
+-   **Dates** — Add a column per date label (Birthday, Anniversary, or any custom label you use).
+
+Each typed column shows the **first matching value** for that contact, or `—` if the contact has no value of that type.
+
+Typed columns appear immediately after their parent column and persist across page reloads.
+
+### Card View
+
+Switch between **table** and **card** layout using the toggle button next to the column variants button. On screens narrower than 768 px, the card layout is always active regardless of the toggle.
+
+Card view is recommended when you have many typed columns enabled, as it avoids horizontal scrolling and keeps all contact details visible at a glance. Typed column values appear at the bottom of each card.
 
 ## Integrations
 
