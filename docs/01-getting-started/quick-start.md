@@ -51,5 +51,18 @@ Generating Demo Account...
 *   **Contacts**: View the generated contacts and their relationships.
 *   **Graph View**: Click the graph icon to see how contacts are connected.
 *   **Settings**: Configure your preferences and import real data.
+*   **Integrations**: Connect Claude Desktop, Zapier, or custom scripts via **Settings → Integrations**.
 
 [Read more about Features](../03-features/crm-overview.md)
+
+## 5. Connect an AI Agent (Optional)
+
+Ari supports AI-powered contact management via the [Model Context Protocol](https://modelcontextprotocol.io/). To connect Claude Desktop:
+
+1. Go to **Settings → Integrations → Connect → Claude**.
+2. Copy the generated token.
+3. Add the `ari-mcp` server to your `claude_desktop_config.json` (the exact snippet is shown in the dialog).
+
+Once connected, you can ask Claude: *"Find John Smith and add a note that he prefers morning calls."*
+
+[Learn more about Integrations](../03-features/integrations.md)

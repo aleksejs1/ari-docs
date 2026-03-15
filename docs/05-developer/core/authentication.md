@@ -40,6 +40,115 @@ Refresh Tokens are strictly scoped to the `Tenant` (User).
 - `DELETE /api/active-sessions/{id}`: Revoke a refresh token.
 - `POST /api/logout`: Revokes the current refresh token.
 
+---
+
+## API Key Authentication
+
+API keys allow AI agents, scripts, and automation tools to access the same `/api/*` endpoints as the web browser, but with **per-key permission scopes** and **rate limiting**.
+
+### Token format
+
+```
+Authorization: Bearer ari_<64-hex-chars>
+```
+
+The raw secret is generated as `ari_` + `bin2hex(random_bytes(32))` (256 bits of entropy). Only a SHA-256 hex digest is stored in the database. The last four characters of the raw secret (`secretLastFour`) are stored in plaintext for UI display.
+
+### Why SHA-256 and not Argon2id
+
+API secrets are long, cryptographically random strings — not user-chosen passwords. Argon2id's deliberate slowness is designed to resist dictionary attacks on weak passwords. Applied to random secrets it adds no security but wastes 100–300 ms of CPU on every API request. SHA-256 + `hash_equals()` takes microseconds and is safe because 32 random bytes have 2²⁵⁶ possible values.
+
+### Firewall order
+
+`ApiKeyAuthenticator` is registered **before** `jwt` on the `api` firewall:
+
+```yaml
+# config/packages/security.yaml
+firewalls:
+    api:
+        pattern: ^/api
+        stateless: true
+        custom_authenticators:
+            - Ari\Security\ApiKeyAuthenticator
+        jwt: ~
+```
+
+If `ApiKeyAuthenticator::supports()` returns false (header doesn't start with `Bearer ari_`), Symfony falls through to the JWT authenticator — existing behaviour is fully preserved.
+
+> **Implementation note**: Symfony's JWT bundle intercepts any `Bearer` token before custom authenticators run. `ApiKeyJwtBypassSubscriber` (priority 500) moves `ari_*` tokens from `Authorization` to a private header before the security firewall fires, ensuring the JWT authenticator never sees them.
+
+### ApiKeyToken and role propagation
+
+On successful authentication, `createToken()` returns an `ApiKeyToken extends AbstractToken` carrying:
+- The authenticated `User` object
+- The user's own roles (including `ROLE_USER`) — so `IS_AUTHENTICATED_FULLY` and `access_control` rules pass
+- The key's UUID, name, last-four suffix, and scopes array
+
+JWT sessions are unaffected — they continue to use `PostAuthenticationToken` with no scope restrictions.
+
+### Scope enforcement in voters
+
+Voters check the token type at the top of `voteOnAttribute`:
+
+```php
+if ($token instanceof ApiKeyToken) {
+    $required = match ($attribute) {
+        self::VIEW   => 'contacts:read',
+        self::EDIT   => 'contacts:write',
+        self::ADD    => 'contacts:write',
+        self::DELETE => 'contacts:delete',
+        default      => null,
+    };
+    if ($required !== null && !$token->hasScope($required)) {
+        return false;
+    }
+}
+// ... existing tenant ownership check unchanged
+```
+
+`hasScope()` resolves wildcards: `*` grants everything; `contacts:*` grants all `contacts:` scopes.
+
+### Rate limiting
+
+Every API key response includes standard rate-limit headers:
+
+```
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 743
+X-RateLimit-Reset: 1718123456
+```
+
+Headers are present on **all** responses — including 401 and 403 — so agents know how many attempts remain before backing off. When the limit is reached: `429 Too Many Requests` + `Retry-After`.
+
+Configure the limit via the `API_KEY_RATE_LIMIT` env var (default: 1 000 req/hour). In test environments set it to a small value (e.g. `5`) to trigger 429s without 1 000 requests.
+
+### Trusted proxies and `lastUsedIp`
+
+`$request->getClientIp()` returns the real client IP only when `trusted_proxies` is configured:
+
+```yaml
+# config/packages/framework.yaml
+framework:
+    trusted_proxies: '%env(TRUSTED_PROXIES)%'
+    trusted_headers:
+        - x-forwarded-for
+        - x-forwarded-host
+        - x-forwarded-port
+        - x-forwarded-proto
+```
+
+Set `TRUSTED_PROXIES` to your reverse proxy CIDR (e.g. `127.0.0.1,10.0.0.0/8`). Without this, `lastUsedIp` will record the proxy address.
+
+### Entitlement gate
+
+Access to API key management is controlled by two entitlements:
+- **Feature flag** `api_keys` — gates the "Integrations" settings tab and `POST /api/api_keys`
+- **Quota** `api_keys` — maximum number of active keys per user (plan-dependent; 0 = unlimited)
+
+See [`api-keys.md`](./api-keys.md) for the full developer reference.
+
+---
+
 ### Security Considerations
 
 #### Public Logout Endpoint
