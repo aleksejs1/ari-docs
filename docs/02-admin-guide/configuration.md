@@ -71,3 +71,35 @@ Ari uses environment variables to configure various aspects of the application. 
 | `CORS_ALLOW_ORIGIN` | Regex pattern for allowed CORS origins. | `^https?://(localhost\|127\.0\.0\.1\|0\.0\.0\.0)(:[0-9]+)?$` |
 | `LOCK_DSN` | DSN for the locking mechanism. | `flock` |
 | `XML_IMPORT_LIMIT` | Maximum number of contacts to import from XML per batch. | `70` |
+
+## Observability & Backups
+
+These variables are used by the optional monitoring stack (`compose.monitoring.yaml`).
+See [Monitoring](./monitoring.md) and [Backup and Restore](./backup-restore.md) for setup instructions.
+
+### Application Observability
+
+| Variable | Description | Default Value |
+| :--- | :--- | :--- |
+| `APP_VERSION` | Version string returned by `GET /api/health`. Set at Docker build time. | `dev` |
+| `LOG_TENANT_HASH_KEY` | HMAC-SHA256 key for anonymising tenant IDs in structured logs. Empty = omit tenant hash (a WARNING is logged at startup). Generate with `openssl rand -hex 32`. | (empty) |
+| `METRICS_SECRET` | Bearer token for `GET /metrics` (Prometheus scrape endpoint). Empty = endpoint returns 404 (feature disabled). Generate with `openssl rand -hex 32`. **Do not expose `/metrics` publicly.** | (empty) |
+
+### Monitoring Stack (compose.monitoring.yaml)
+
+| Variable | Description | Default Value |
+| :--- | :--- | :--- |
+| `GRAFANA_ADMIN_PASSWORD` | Grafana admin password. Must not be `admin` — the container exits at startup if it is. Generate with `openssl rand -base64 16`. | — |
+| `ALERTMANAGER_TELEGRAM_BOT_TOKEN` | Telegram bot token for AlertManager alert delivery (separate bot from the app notification bot). | (empty) |
+| `ALERTMANAGER_TELEGRAM_CHAT_ID` | Numeric Telegram chat ID to receive alerts. Use `@userinfobot` to find yours. | (empty) |
+
+### Backup (compose.monitoring.yaml)
+
+| Variable | Description | Default Value |
+| :--- | :--- | :--- |
+| `RESTIC_REPOSITORY` | Restic repository URL. Examples: `s3:s3.amazonaws.com/bucket/ari`, `sftp:user@host:/backups/ari`. | — |
+| `RESTIC_PASSWORD` | Restic repository encryption passphrase. **Keep a copy outside the server.** Generate with `openssl rand -base64 32`. | — |
+| `BACKUP_MARIADB_HOST` | MariaDB hostname reachable from the backup container. Only needed when `DB_CONNECTION=mysql`. | `database` |
+| `BACKUP_MARIADB_USER` | MariaDB user for `mariadb-dump`. Only needed when `DB_CONNECTION=mysql`. | (empty) |
+| `BACKUP_MARIADB_PASSWORD` | MariaDB password. Only needed when `DB_CONNECTION=mysql`. | (empty) |
+| `BACKUP_MARIADB_DB` | MariaDB database name. Only needed when `DB_CONNECTION=mysql`. | (empty) |
