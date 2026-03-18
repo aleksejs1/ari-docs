@@ -21,6 +21,17 @@ At the heart of Ari is a powerful contact management system that goes far beyond
 -   **Contact Graph**: Visualize your network with an interactive force-directed graph showing connections between people.
 -   **Customizable Tables**: Toggle columns, reorder them, and sort the contact list to show exactly what you need.
 
+### Interaction Tracking & Keep in Touch
+
+Ari records every call, email, or meeting you have with a contact and reminds you to stay in touch at a regular interval.
+
+-   **Interaction Log**: Log any communication event — type, date, who reached out, notes, and free-form tags. The full history appears in a timeline on the contact detail page.
+-   **Cadence**: Set a personal "keep in touch every N days" target per contact. A red badge appears on the contact when the interval has elapsed.
+-   **Catch Up Widget**: A dashboard widget surfaces up to 7 overdue contacts with a one-click **Log Interaction** button so you can catch up without leaving the dashboard.
+-   **Table Columns**: Optional **Last Interaction** (color-coded by cadence ratio) and **Cadence** columns are available in the contacts table, hidden by default.
+
+See [Interaction Tracking & Keep in Touch](./interactions-cadence.md) for the full guide.
+
 ### Column Variants
 
 Beyond the standard columns, you can add **type-scoped columns** to surface specific sub-fields directly in the table.

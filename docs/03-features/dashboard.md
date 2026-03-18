@@ -15,6 +15,7 @@ The Ari dashboard is your personal command center. It displays key information a
 | **System Stats** | Total contacts, audit logs, and sent notifications at a glance |
 | **Recent Logins** | Your recent login activity with timestamps and details |
 | **Upcoming Anniversaries** | Birthdays and important dates coming up in the next 30 days |
+| **Catch Up** | Up to 7 contacts whose keep-in-touch cadence has elapsed, with a one-click Log Interaction button |
 | **Groups** | Quick overview of your contact groups |
 | **Recent Activity** | Latest changes to your contacts and system events |
 
