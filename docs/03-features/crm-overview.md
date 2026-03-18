@@ -63,6 +63,9 @@ Your data shouldn't be trapped in a silo.
 -   **Data Portability**:
     -   **XML Export**: Full backup of your database structure.
     -   **XML Import**: Restore backups or migrate between instances smoothly.
+-   **Phone Backup Import**:
+    -   **SMS & Call History**: Import call logs and SMS threads from **SMS Backup & Restore** (Android) as contact interaction records.
+    -   **Automatic Matching**: Phone numbers are normalised and matched to existing contacts; optionally create new contacts for unknown numbers.
 
 ## Productivity & Dashboard
 
