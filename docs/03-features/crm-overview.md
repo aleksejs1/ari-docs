@@ -32,6 +32,18 @@ Ari records every call, email, or meeting you have with a contact and reminds yo
 
 See [Interaction Tracking & Keep in Touch](./interactions-cadence.md) for the full guide.
 
+### Relationship Playbooks
+
+Playbooks turn intentions into actions by attaching a goal-driven task schedule to any contact.
+
+-   **Goals**: Choose from Maintain, Deepen, Reignite, Rekindle, or Appreciate to set the direction.
+-   **Presets**: Pick a named plan that matches your goal — the system generates concrete tasks (calls, date nights, surprises, check-ins) at the right cadence.
+-   **Reflections**: After completing an offline task (call, visit), a reflection prompt captures how it went.
+-   **Reciprocity Indicator**: A 90-day interaction balance shows whether you or the contact initiates contact more often.
+-   **Seasonal Check-in**: A quarterly banner reminds you to review your active Playbooks.
+
+See [Relationship Playbooks](./relationship-playbooks.md) for the full guide.
+
 ### Column Variants
 
 Beyond the standard columns, you can add **type-scoped columns** to surface specific sub-fields directly in the table.
