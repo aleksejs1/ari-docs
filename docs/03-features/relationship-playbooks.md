@@ -147,3 +147,46 @@ The following background commands power Relationship Playbooks:
 | `playbooks:generate-tasks` | Daily | Generates the next task for each active Playbook whose task queue is empty |
 | `playbooks:finalise-reflections` | Hourly | Finalises tasks stuck in `awaiting_reflection` for more than 48 hours |
 | `playbooks:seasonal-checkin` | Quarterly | Creates seasonal check-in notifications for users with active Playbooks |
+
+---
+
+## Developer Notes
+
+### Key Entities
+
+| Entity | Description |
+|---|---|
+| `ContactPlaybook` | Stores the active plan for a contact: `preset`, `goal`, `whyTags`, `whyText`, `status`, and `celebrationPending`. One-to-one with a contact (a contact may have at most one non-archived playbook at a time). |
+| `ContactTask` | A single actionable item belonging to a `ContactPlaybook`. Tracks `type`, `seriesKey`, `status`, `dueDate`, `isOffline`, `snoozedUntil`, `reflectionDueAt`, and `completedAt`. The `seriesKey` (defaults to `type`) identifies the recurring series within a preset and is used by `ContactTaskGeneratorService` to find the most recent task per series when computing the next due date. |
+| `TaskReflection` | A OneToOne entity attached to a `ContactTask`. Created by `TaskReflectionFactory` when an offline task is marked done. Holds a `question` (context-specific per task type, max 500 chars) and the user's `answer` (max 10 000 chars). Fetched with `fetch: EAGER` on the `ContactTask` mapping to avoid an N+1 query when the task list is serialized. |
+| `PlaybookTemplate` | A configuration-only entity (or YAML/PHP config resource) that defines the available preset names, their goal, and the task type mix. Not a Doctrine entity — presets are resolved by name at activation time. |
+
+### Celebration Milestone
+
+`ContactPlaybook::CELEBRATION_MILESTONE = 4`. Every time a task in a given series is completed and the per-series completion count is a multiple of 4, `ContactPlaybook::celebrationPending` is set to `true`. The API response for the next GET on the playbook will include `celebrationPending: true`. The frontend shows the celebration screen and then PATCHes `celebrationPending=false` to reset it.
+
+### TaskReflection and N+1 Prevention
+
+`ContactTask::$reflection` is declared with `fetch: 'EAGER'` on the `#[ORM\OneToOne]` mapping. This means Doctrine joins the `task_reflection` table in the same query when loading a `ContactTask`, avoiding one extra query per task when serializing the task list. The `reflection` field is included in the `contact_task:read` normalization group, so it is always returned inline in task API responses.
+
+### Rate Limiting
+
+Playbook activation (`POST /api/contacts/{contactId}/playbook`) is rate-limited by `JwtUserRateLimiterSubscriber` to **20 activations per hour** per authenticated user. Requests exceeding the limit receive HTTP `429 Too Many Requests`. This covers switching playbooks (which archives the old one and activates a new one) as well as fresh activations.
+
+### Status Flows
+
+See [Status Flows](../05-developer/core/status-flows.md) for full state machine diagrams and transition tables for `ContactTask` and `ContactPlaybook`.
+
+### Relevant API Endpoints
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/api/contacts/{contactId}/playbook` | Fetch the active playbook for a contact, including `status`, `celebrationPending`, `preset`, and `goal`. |
+| `POST` | `/api/contacts/{contactId}/playbook` | Activate a new playbook. Accepts `PlaybookActivationInput` (`preset`, `goal`, `whyTags`, `whyText`). Archives any existing active playbook and its tasks first. Rate-limited. |
+| `PATCH` | `/api/contacts/{contactId}/playbook` | Update the playbook — primarily used to transition `status` between `active` and `paused`, or to reset `celebrationPending`. |
+| `DELETE` | `/api/contacts/{contactId}/playbook` | Archive the playbook and all its pending/paused tasks. |
+| `GET` | `/api/contact_tasks` | List tasks. Supports `?contact=` (exact), `?status=` (exact), and `?dueDate[before]=` / `?dueDate[after]=` filters. |
+| `GET` | `/api/contact_tasks/{id}` | Fetch a single task. Includes the embedded `reflection` object (eagerly loaded). |
+| `PATCH` | `/api/contact_tasks/{id}` | Transition a task status (`pending` → `completed` / `snoozed` / `archived`; `snoozed` → `pending`; `awaiting_reflection` → `completed`). Accepts `ContactTaskUpdateInput` with `status` and optional `snoozedUntil`. |
+| `GET` | `/api/task_reflections/{id}` | Fetch a task reflection by ID. |
+| `PATCH` | `/api/task_reflections/{id}` | Save the reflection answer. Accepts `TaskReflectionUpdateInput` with `answer` (max 10 000 chars). Processed by `TaskReflectionProcessor`, which sets `answeredAt` and transitions the parent task to `completed`. |

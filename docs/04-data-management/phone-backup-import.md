@@ -97,3 +97,44 @@ Normal behaviour — processing is asynchronous. Large backup files (thousands o
 ### I see "Import failed" with no detail
 
 The backup file may be corrupt, use an unsupported encoding, or have a root element other than `<smses>` or `<calls>`. Ensure the file was exported directly by SMS Backup & Restore and has not been manually edited.
+
+---
+
+## Developer Notes
+
+### Architecture
+
+The import pipeline is fully asynchronous:
+
+1. `POST /api/sms_backup/import` (multipart, field `files[]`, max 2 XML files)
+   → validates file type, queues `SmsBackupImportMessage`, returns `202 { status: 'queued' }`
+2. `SmsBackupImportMessageHandler` dispatches to `SmsBackupImportService`
+3. `SmsBackupParserService` streams the XML with `XMLReader` (no DOM load → safe for large files)
+4. `ContactPhoneNumberRepository::buildPhoneMapForTenant()` builds a `normalizedPhone → contactId` map via DQL
+5. SMS records are grouped by (contact, UTC day) → one `ContactInteraction` per group
+6. Call records create one `ContactInteraction` per call
+7. Deduplication via `ContactInteractionRepository::findDeduplicationKeysByContactIds()`
+8. `ContactInteractionListener` (Doctrine `prePersist` + `postFlush`) updates `Contact::lastInteractionAt` in bulk at the end of the flush
+
+### XML security
+
+The parser uses `LIBXML_NONET` (disables network access) and `SUBST_ENTITIES=false` (no entity substitution). **Never remove these flags** — they protect against XXE (XML External Entity) injection attacks.
+
+### Phone number normalization
+
+Both the phone map builder and the parser normalize numbers with `preg_replace('/\D/', '', $phone)`. Numbers stored in Ari in local format (e.g. `29837434`) will not match international format numbers from the backup (`+37129837434`). Users must store numbers in international format.
+
+### Adding a new interaction type
+
+To add a support for a new backup format (e.g. WhatsApp), implement a new parser implementing the same parse-and-yield approach as `SmsBackupParserService`, add the new file type to the upload handler, and register a new `SmsBackupImportMessage` variant. Do not modify the existing parser.
+
+### Relevant classes
+
+| Class | Location | Responsibility |
+|---|---|---|
+| `SmsBackupController` | `src/Controller/` | Receives multipart upload, queues message |
+| `SmsBackupParserService` | `src/Service/` | Streaming XML parser |
+| `SmsBackupImportService` | `src/Service/` | Orchestrates phone map, dedup, persist |
+| `SmsBackupImportMessage` | `src/Message/` | Messenger message DTO |
+| `SmsBackupImportMessageHandler` | `src/MessageHandler/` | Calls service, sends in-app notification |
+| `ContactPhoneNumberRepository` | `src/Repository/` | `buildPhoneMapForTenant()` DQL query |
